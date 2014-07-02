@@ -1,0 +1,4 @@
+OpenGL-OBJ-Parser
+=================
+
+This program is a refinement and continuation of the original test program, OpenGL_OBJ_Viewer. This program is written much, much better and makes much more logical sense in it's layout. the last program was meant to be a test, a proof of concept, but this one is meant to be a final version. This program will read in a .obj file and it's correpsonding texture and material files, then it will either display this model to the viewer, or the user can have the program go through the 3D model and take images from as many different perspectives as they choose. The eventual purpose of the program is to generate a database of images from all different perspectives in our 3D environment, which will allow us to precompute features using some Computer Vision algorithms for quick comparison with a real time feed from a robot, which will help us to localize a robot in it's environment.
