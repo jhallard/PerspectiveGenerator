@@ -1,5 +1,5 @@
 cmake_minimum_required (VERSION 2.6)
-project (testing)
+project (OBJ-Parser)
 
 
 #########################################################
@@ -16,9 +16,9 @@ endif(NOT OPENGL_FOUND)
 #########################################################
 # Include Files
 #########################################################
-add_executable(test src/Main/main.cpp src/MathHelp/MathHelp.cpp textfile.cpp)
+add_executable(OpenGL-OBJ-Parser src/Main/main.cpp src/MathHelp/MathHelp.cpp src/Rendering/Render.cpp src/IO/ProgramIO.cpp )
 
 ########################################################
 # Linking & stuff
 #########################################################
-target_link_libraries(test GL GLU IL GLEW glut X11 pthread /usr/local/lib/libassimp.so)
+target_link_libraries(OpenGL-OBJ-Parser GL GLU IL GLEW glut X11 pthread /usr/local/lib/libassimp.so)

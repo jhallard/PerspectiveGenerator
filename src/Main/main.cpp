@@ -5,6 +5,11 @@
 #define ModelMatrixOffset sizeof(float) * 16 * 2
 #define MatrixSize sizeof(float) * 16
 
+
+#include <IL/il.h>
+#include <GL/glew.h>
+#include <GL/freeglut.h>
+
 #include "assimp/Importer.hpp"	//OO version Header!
 #include "assimp/postprocess.h"
 #include "assimp/scene.h"
@@ -19,6 +24,11 @@
 
 #include "HelperStructures.h"
 #include "MathHelp.h"
+#include "View.h"
+#include "Render.h"
+#include "ShaderFunctions.h"
+#include "ProgramIO.h"
+
 
 
 
@@ -57,16 +67,17 @@ std::map<std::string, GLuint> * textureIdMap = new std::map<std::string, Gluint>
 static const std::string modelname;// = "../14db49e526f340dfba81c4a2da23c716/14db49e526f340dfba81c4a2da23c716.obj";
 
 // Camera Position
-float camX = 0, camY = 0, camZ = 0;
+float[3] camera = {0, 0, 0};
 
 // Mouse Tracking Variables
-int startX, startY, tracking = 0;
+//int startX, startY, tracking = 0;
 
-float transx = 0, transy = 0, transz = 0;
+// mesh tranlation
+float[3] translation = {0, 0, 0};
+
 
 // Camera Spherical Coordinates
-float alpha = 0.0f, beta = 0.0f;
-float r = 5.0f;
+//float alpha = 0.0f, beta = 0.0f, float r = 5.0f;
 
 
 int init();
@@ -87,16 +98,16 @@ int main(int argc, char **argv) {
 		
 
 //  Callback Registration
-	glutDisplayFunc(renderScene);
-	glutReshapeFunc(changeSize);
-	glutIdleFunc(renderScene);
+	glutDisplayFunc(Render::renderScene);
+	glutReshapeFunc(IO::changeSize);
+	glutIdleFunc(Render::renderScene);
 
 //	Mouse and Keyboard Callbacks
-	glutKeyboardFunc(processKeys);
-	glutMouseFunc(processMouseButtons);
-	glutMotionFunc(processMouseMotion);
+	glutKeyboardFunc(IO::processKeys);
+	glutMouseFunc(IO::processMouseButtons);
 	
-	glutMouseWheelFunc ( mouseWheel ) ;
+	//glutMotionFunc(IO::processMouseMotion);
+	//glutMouseWheelFunc ( mouseWheel ) ;
 
 //	Init GLEW
 	//glewExperimental = GL_TRUE;

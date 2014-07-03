@@ -1,6 +1,15 @@
 #include <cmath>
 #include <iostream>
 #include <vector>
+#include <IL/il.h>
+#include <GL/glew.h>
+#include <GL/freeglut.h>
+
+#include "assimp/Importer.hpp"	//OO version Header!
+#include "assimp/postprocess.h"
+#include "assimp/scene.h"
+
+
 #include <string>
 #include <exception>
 #include <fstream>

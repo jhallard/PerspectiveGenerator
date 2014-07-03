@@ -1,5 +1,6 @@
 #include "HelperStructures.h"
-#include "HelperMath.h"
+#include "MathHelp.h"
+#include "View.h"
 
 namespace IO
 {

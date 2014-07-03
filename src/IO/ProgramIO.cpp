@@ -1,5 +1,4 @@
 #include "ProgramIO.h"
-#include "HelperStructures.h"
 
 namespace IO
 {
@@ -79,8 +78,8 @@ namespace IO
 
 		/* get iterator */
 		std::map<std::string, GLuint>::iterator itr = textureIdMap->begin();
-		int i=0;
-		for (; itr != textureIdMap->end(); ++i, ++itr)
+
+		for (int i=0; itr != textureIdMap->end(); ++i, ++itr)
 		{
 			//save IL image ID
 			std::string filename = (*itr).first;  // get filename
