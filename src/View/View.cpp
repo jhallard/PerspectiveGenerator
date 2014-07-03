@@ -10,7 +10,7 @@ namespace View
 
 		float f = 1.0f / tan (fov * (M_PI / 360.0f));
 
-		setIdentityMatrix(projMatrix,4);
+		MathHelp::setIdentityMatrix(projMatrix,4);
 
 		projMatrix[0] = f / ratio;
 		projMatrix[1 * 4 + 1] = f;
@@ -35,13 +35,13 @@ namespace View
 		dir[0] =  (lookAtX - posX);
 		dir[1] =  (lookAtY - posY);
 		dir[2] =  (lookAtZ - posZ);
-		normalize(dir);
+		MathHelp::normalize(dir);
 
-		crossProduct(dir,up,right);
-		normalize(right);
+		MathHelp::crossProduct(dir,up,right);
+		MathHelp::normalize(right);
 
-		crossProduct(right,dir,up);
-		normalize(up);
+		MathHelp::crossProduct(right,dir,up);
+		MathHelp::normalize(up);
 
 		float viewMatrix[16],aux[16];
 
@@ -65,9 +65,9 @@ namespace View
 		viewMatrix[11] = 0.0f;
 		viewMatrix[15] = 1.0f;
 
-		setTranslationMatrix(aux, -posX, -posY, -posZ);
+		MathHelp::setTranslationMatrix(aux, -posX, -posY, -posZ);
 
-		multMatrix(viewMatrix, aux);
+		MathHelp::multMatrix(viewMatrix, aux);
 		
 		glBindBuffer(GL_UNIFORM_BUFFER, matricesUniBuffer);
 		glBufferSubData(GL_UNIFORM_BUFFER, ViewMatrixOffset, MatrixSize, viewMatrix);
@@ -77,7 +77,7 @@ namespace View
 	#define aisgl_min(x,y) (x<y?x:y)
 	#define aisgl_max(x,y) (y>x?y:x)
 
-	void get_bounding_box_for_node (const aiNode* nd, aiVector3D* min, aiVector3D* max)
+	void get_bounding_box_for_node (const aiNode* nd, aiVector3D* min, aiVector3D* max, const aiScene* scene)
 	{
 		aiMatrix4x4 prev;
 		unsigned int n = 0, t;
@@ -107,7 +107,7 @@ namespace View
 	}
 
 
-	void get_bounding_box (aiVector3D* min, aiVector3D* max)
+	void get_bounding_box (aiVector3D* min, aiVector3D* max, const aiScene* scene)
 	{
 
 		min->x = min->y = min->z =  1e10f;

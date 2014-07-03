@@ -1,20 +1,17 @@
-
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-
-#include <iostream>
+#include "ShaderFunctions.h"
 
 
 namespace Shaders
 {
 
-	char *textFileRead(char *fn) {
+	void printShaderInfoLog(GLuint obj);
+	GLuint setupShaders(char * vertexfile, char * fragmentfile);
+	char *textFileRead(char *fn);
 
-
+	char *textFileRead(char *fn) 
+	{
 		FILE *fp;
 		char *content = NULL;
-
 		int count=0;
 
 		if (fn != NULL)
@@ -46,7 +43,8 @@ namespace Shaders
 
 
 
-	GLuint setupShaders(char * vertexfile, char * fragment file) {
+	GLuint setupShaders(char * vertexfile, char * fragmentfile) 
+	{
 
 		char *vs = NULL,*fs = NULL,*fs2 = NULL;
 
@@ -55,8 +53,8 @@ namespace Shaders
 		v = glCreateShader(GL_VERTEX_SHADER);
 		f = glCreateShader(GL_FRAGMENT_SHADER);
 
-		vs = textFileRead(vertexFileName);
-		fs = textFileRead(fragmentFileName);
+		vs = textFileRead(vertexfile);
+		fs = textFileRead(fragmentfile);
 
 		if(vs == NULL) 
 			std::cout << "vs files null\n" << std::endl;
@@ -90,7 +88,7 @@ namespace Shaders
 
 		glLinkProgram(p);
 		glValidateProgram(p);
-		printProgramInfoLog(p);
+		IO::printProgramInfoLog(p);
 
 		program = p;
 		vertexShader = v;

@@ -30,7 +30,7 @@ namespace IO
 		std::cout << std::endl;
 
 		aiVector3D scene_min, scene_max, scene_center;
-		get_bounding_box(&scene_min, &scene_max);
+		View::get_bounding_box(&scene_min, &scene_max);
 		float tmp;
 		tmp = scene_max.x-scene_min.x;
 		tmp = scene_max.y - scene_min.y > tmp?scene_max.y - scene_min.y:tmp;
@@ -152,7 +152,7 @@ namespace IO
 	    glViewport(0, 0, w, h);
 
 		ratio = (1.0f * w) / h;
-		buildProjectionMatrix(53.13f, ratio, 0.1f, 100.0f);
+		View::buildProjectionMatrix(53.13f, ratio, 0.1f, 100.0f);
 	}
 
 	#define printOpenGLError() printOglError(__FILE__, __LINE__)
@@ -177,10 +177,10 @@ namespace IO
 		switch(key)
 		{
 			case 27: glutLeaveMainLoop();break;
-			case 'z': r -= 0.1f; break;
-			case 'x': r += 0.1f; break;	
-			case 'm': glEnable(GL_MULTISAMPLE); break;
-			case 'n': glDisable(GL_MULTISAMPLE); break;
+			// case 'z': r -= 0.1f; break;
+			// case 'x': r += 0.1f; break;	
+			// case 'm': glEnable(GL_MULTISAMPLE); break;
+			// case 'n': glDisable(GL_MULTISAMPLE); break;
 		}
 		//camX = r * sin(alpha * 3.14f / 180.0f) * cos(beta * 3.14f / 180.0f);
 		//camZ = r * cos(alpha * 3.14f / 180.0f) * cos(beta * 3.14f / 180.0f);

@@ -1,11 +1,4 @@
 
-#define MatricesUniBufferSize sizeof(float) * 16 * 3
-#define ProjMatrixOffset 0
-#define ViewMatrixOffset sizeof(float) * 16
-#define ModelMatrixOffset sizeof(float) * 16 * 2
-#define MatrixSize sizeof(float) * 16
-
-
 #include <IL/il.h>
 #include <GL/glew.h>
 #include <GL/freeglut.h>
@@ -22,58 +15,22 @@
 #include <vector>
 #include <iostream>
 
-#include "HelperStructures.h"
-#include "MathHelp.h"
-#include "View.h"
-#include "Render.h"
-#include "ShaderFunctions.h"
-#include "ProgramIO.h"
+#include "../Helper/MathHelp.h"
+#include "../Helper/HelperStructures.h"
+#include "../View/View.h"
+#include "../Rendering/Render.h"
+#include "../Shaders/ShaderFunctions.h"
+#include "../IO/ProgramIO.h"
 
-
-
-
-std::vector<struct Helper::MyMesh> myMeshes;
-
-// Model Matrix (part of the OpenGL Model View Matrix)
-float modelMatrix[16];
-
-// For push and pop matrix
-std::vector<float *> matrixStack;
-
-// Uniform Bindings Points
-GLuint matricesUniLoc = 1, materialUniLoc = 2;
-
-// Uniform Buffer for Matrices
-// this buffer will contain 3 matrices: projection, view and model
-// each matrix is a float array with 16 components
-GLuint matricesUniBuffer;
-
-
-// Program and Shader Identifiers
-GLuint program, vertexShader, fragmentShader;
 
 // Shader Names
-char *vertexFileName;// = "../dirlightdiffambpix.vert";
-char *fragmentFileName;// = "../dirlightdiffambpix.frag";
+char *vertexfile;// = "../dirlightdiffambpix.vert";
+char *fragmentfile;// = "../dirlightdiffambpix.frag";
 
-// the global Assimp scene object
-const aiScene* scene = NULL;
 
-// scale factor for the model to fit in the window
-float scaleFactor;
-
-std::map<std::string, GLuint> * textureIdMap = new std::map<std::string, Gluint>();	
+std::map<std::string, GLuint> * textureIdMap = new std::map<std::string, GLuint>();	
 
 static const std::string modelname;// = "../14db49e526f340dfba81c4a2da23c716/14db49e526f340dfba81c4a2da23c716.obj";
-
-// Camera Position
-float[3] camera = {0, 0, 0};
-
-// Mouse Tracking Variables
-//int startX, startY, tracking = 0;
-
-// mesh tranlation
-float[3] translation = {0, 0, 0};
 
 
 // Camera Spherical Coordinates
@@ -141,13 +98,8 @@ int main(int argc, char **argv) {
 	// cleaning up
 	textureIdMap->clear();  
 
-	// clear myMeshes stuff
-	for (unsigned int i = 0; i < myMeshes.size(); ++i) {
-			
-		glDeleteVertexArrays(1,&(myMeshes[i].vao));
-		glDeleteTextures(1,&(myMeshes[i].texIndex));
-		glDeleteBuffers(1,&(myMeshes[i].uniformBlockIndex));
-	}
+	Render::clearMeshes();
+
 	// delete buffers
 	glDeleteBuffers(1,&matricesUniBuffer);
 
@@ -158,10 +110,10 @@ int main(int argc, char **argv) {
 
 int init()					 
 {
-	if (!Import3DFromFile(modelname)) 
+	if (!IO::Import3DFromFile(modelname, scene)) 
 		return(0);
 
-	LoadGLTextures(scene, textureIdMap);
+	IO::LoadGLTextures(scene, textureIdMap);
 
 	glGetUniformBlockIndex = (PFNGLGETUNIFORMBLOCKINDEXPROC) glutGetProcAddress("glGetUniformBlockIndex");
 	glUniformBlockBinding = (PFNGLUNIFORMBLOCKBINDINGPROC) glutGetProcAddress("glUniformBlockBinding");
@@ -171,9 +123,9 @@ int init()
 	glDeleteVertexArrays = (PFNGLDELETEVERTEXARRAYSPROC) glutGetProcAddress("glDeleteVertexArrays");
 
 
-	program = setupShaders();
+	program = Shaders::setupShaders(vertexfile, fragmentfile);
 
-	genVAOsAndUniformBuffer(scene);
+	Render::genVAOsAndUniformBuffer(scene, textureIdMap);
 
 	glEnable(GL_DEPTH_TEST);		
 	glClearColor(1.0f, 1.0f, 1.0f, 0.0f);

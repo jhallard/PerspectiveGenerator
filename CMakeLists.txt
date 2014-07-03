@@ -13,10 +13,15 @@ if(NOT OPENGL_FOUND)
     message(ERROR " OPENGL not found!")
 endif(NOT OPENGL_FOUND)
 
+SET(OBJ-Parser_SOURCES src/Main/main.cpp src/Shaders/ShaderFunctions.cpp src/View/View.cpp src/Helper/MathHelp.cpp src/Rendering/Render.cpp src/IO/ProgramIO.cpp)
+SET(OBJ-Parser_HEADERS ${QVFeatureFinder_HDRS} src/Shaders/ShaderFunctions.h src/View/View.h src/Helper/MathHelp.h src/Helper/HelperStructures.h src/Rendering/Render.h src/IO/ProgramIO.h)
+
 #########################################################
 # Include Files
 #########################################################
-add_executable(OpenGL-OBJ-Parser src/Main/main.cpp src/MathHelp/MathHelp.cpp src/Rendering/Render.cpp src/IO/ProgramIO.cpp )
+add_executable(OpenGL-OBJ-Parser ${OBJ-Parser_SOURCES}
+    ${OBJ-Parser_HEADERS_MOC}
+    ${OBJ-Parser_FORMS_HEADERS} )
 
 ########################################################
 # Linking & stuff

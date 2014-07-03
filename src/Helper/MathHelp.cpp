@@ -3,14 +3,10 @@
 
 namespace MathHelp
 {
-	static inline float DegToRad(float degrees) 
+	float DegToRad(float degrees) 
 	{ 
 		return (float)(degrees * (M_PI / 180.0f));
-	};
-
-	// ----------------------------------------------------
-	// VECTOR STUFF
-	//
+	}
 
 
 	// res = a cross b;
@@ -31,8 +27,6 @@ namespace MathHelp
 		a[1] /= mag;
 		a[2] /= mag;
 	}
-
-
 
 
 	// sets the square matrix mat to the identity matrix,
@@ -117,7 +111,23 @@ namespace MathHelp
 		mat[7] = 0.0f;
 		mat[11]= 0.0f;
 		mat[15]= 1.0f;
+	}
 
+	
+	void set_float4(float f[4], float a, float b, float c, float d)
+	{
+		f[0] = a;
+		f[1] = b;
+		f[2] = c;
+		f[3] = d;
+	}
+
+	void color4_to_float4(const aiColor4D *c, float f[4])
+	{
+		f[0] = c->r;
+		f[1] = c->g;
+		f[2] = c->b;
+		f[3] = c->a;
 	}
 
 } // end nameapce MathHelp

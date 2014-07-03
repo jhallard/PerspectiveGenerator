@@ -21,10 +21,10 @@ namespace Render
 
 
 
-	void genVAOsAndUniformBuffer(const aiScene *sc) {
+	void genVAOsAndUniformBuffer(const aiScene *sc, std::map<std::string, GLuint> * textureIdMap) {
 
-		struct MyMesh aMesh;
-		struct HelperStructures::MyMaterial aMat; 
+		struct Helper::MyMesh aMesh;
+		struct Helper::MyMaterial aMat; 
 		GLuint buffer;
 		
 		// For each mesh
@@ -100,7 +100,7 @@ namespace Render
 			aiString texPath;	//contains filename of texture
 			if(AI_SUCCESS == mtl->GetTexture(aiTextureType_DIFFUSE, 0, &texPath)){
 					//bind texture
-					unsigned int texId = textureIdMap[texPath.data];
+					unsigned int texId = (*textureIdMap)[texPath.data];
 					aMesh.texIndex = texId;
 					aMat.texCount = 1;
 				}
@@ -108,28 +108,28 @@ namespace Render
 				aMat.texCount = 0;
 
 			float c[4];
-			set_float4(c, 0.8f, 0.8f, 0.8f, 1.0f);
+			MathHelp::set_float4(c, 0.8f, 0.8f, 0.8f, 1.0f);
 			aiColor4D diffuse;
 			if(AI_SUCCESS == aiGetMaterialColor(mtl, AI_MATKEY_COLOR_DIFFUSE, &diffuse))
-				color4_to_float4(&diffuse, c);
+				MathHelp::color4_to_float4(&diffuse, c);
 			memcpy(aMat.diffuse, c, sizeof(c));
 
-			set_float4(c, 0.2f, 0.2f, 0.2f, 1.0f);
+			MathHelp::set_float4(c, 0.2f, 0.2f, 0.2f, 1.0f);
 			aiColor4D ambient;
 			if(AI_SUCCESS == aiGetMaterialColor(mtl, AI_MATKEY_COLOR_AMBIENT, &ambient))
-				color4_to_float4(&ambient, c);
+				MathHelp::color4_to_float4(&ambient, c);
 			memcpy(aMat.ambient, c, sizeof(c));
 
-			set_float4(c, 0.0f, 0.0f, 0.0f, 1.0f);
+			MathHelp::set_float4(c, 0.0f, 0.0f, 0.0f, 1.0f);
 			aiColor4D specular;
 			if(AI_SUCCESS == aiGetMaterialColor(mtl, AI_MATKEY_COLOR_SPECULAR, &specular))
-				color4_to_float4(&specular, c);
+				MathHelp::color4_to_float4(&specular, c);
 			memcpy(aMat.specular, c, sizeof(c));
 
-			set_float4(c, 0.0f, 0.0f, 0.0f, 1.0f);
+			MathHelp::set_float4(c, 0.0f, 0.0f, 0.0f, 1.0f);
 			aiColor4D emission;
 			if(AI_SUCCESS == aiGetMaterialColor(mtl, AI_MATKEY_COLOR_EMISSIVE, &emission))
-				color4_to_float4(&emission, c);
+				MathHelp::color4_to_float4(&emission, c);
 			memcpy(aMat.emissive, c, sizeof(c));
 
 			float shininess = 0.0;
@@ -161,21 +161,21 @@ namespace Render
 
 		float aux[16];
 		memcpy(aux,&m,sizeof(float) * 16);
-		multMatrix(modelMatrix, aux);
+		MathHelp::multMatrix(modelMatrix, aux);
 		setModelMatrix();
 
 
 		// draw all meshes assigned to this node
-		for (unsigned int n=0; n < nd->mNumMeshes; ++n){
+		for (unsigned int n=0; n < nd->mNumMeshes; ++n)
+		{
 			// bind material uniform
-			glBindBufferRange(GL_UNIFORM_BUFFER, materialUniLoc, myMeshes[nd->mMeshes[n]].uniformBlockIndex, 0, sizeof(struct MyMaterial));	
+			glBindBufferRange(GL_UNIFORM_BUFFER, materialUniLoc, myMeshes[nd->mMeshes[n]].uniformBlockIndex, 0, sizeof(struct Helper::MyMaterial));	
 			// bind texture
 			glBindTexture(GL_TEXTURE_2D, myMeshes[nd->mMeshes[n]].texIndex);
 			// bind VAO
 			glBindVertexArray(myMeshes[nd->mMeshes[n]].vao);
 			// draw
 			glDrawElements(GL_TRIANGLES,myMeshes[nd->mMeshes[n]].numFaces*3,GL_UNSIGNED_INT,0);
-
 		}
 
 		// draw all children
@@ -188,20 +188,21 @@ namespace Render
 
 	// Rendering Callback Function
 
-	void renderScene(void) {
+	void renderScene(void)
+	{
 
 		static float step = 0.0f;
 
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		translate(transx, transy, transz);
+		translate(translation[0], translation[1], translation[2]);
 
 		//transx = 0; transy = 0; transz = 0;
 		// set camera matrix
-		setCamera(camX,camY,camZ,transx, transy, transz);
+		View::setCamera(camera[0], camera[1], camera[2],translation[0], translation[1], translation[2]);
 
 		// set the model matrix to the identity Matrix
-		setIdentityMatrix(modelMatrix,4);
+		MathHelp::setIdentityMatrix(modelMatrix,4);
 
 		// sets the model matrix to a scale matrix so that the model fits in the window
 		scale(scaleFactor, scaleFactor, scaleFactor);
@@ -222,9 +223,9 @@ namespace Render
 		// FPS computation and display
 		frame++;
 		time1=glutGet(GLUT_ELAPSED_TIME);
-		if (time1 - timebase > 1000) {
-			sprintf(s,"FPS:%4.2f",
-				frame*1000.0/(time1-timebase));
+		if (time1 - timebase > 1000) 
+		{
+			sprintf(s,"FPS:%4.2f", frame*1000.0/(time1-timebase));
 			timebase = time1;
 			frame = 0;
 			glutSetWindowTitle(s);
@@ -235,6 +236,52 @@ namespace Render
 
 		// increase the rotation angle
 		//step++;
+	}
+
+
+	void clearMeshes()
+	{
+			// clear myMeshes stuff
+		for (unsigned int i = 0; i < myMeshes.size(); ++i) {
+				
+			glDeleteVertexArrays(1,&(myMeshes[i].vao));
+			glDeleteTextures(1,&(myMeshes[i].texIndex));
+			glDeleteBuffers(1,&(myMeshes[i].uniformBlockIndex));
+		}
+	}
+
+	void setModelMatrix() 
+	{
+		glBindBuffer(GL_UNIFORM_BUFFER,matricesUniBuffer);
+		glBufferSubData(GL_UNIFORM_BUFFER, ModelMatrixOffset, MatrixSize, modelMatrix);
+		glBindBuffer(GL_UNIFORM_BUFFER,0);
+	}
+
+	// The equivalent to glTranslate applied to the model matrix
+	void translate(float x, float y, float z) 
+	{
+		float aux[16];
+		MathHelp::setTranslationMatrix(aux,x,y,z);
+		MathHelp::multMatrix(modelMatrix,aux);
+		Render:setModelMatrix();
+	}
+
+	// The equivalent to glRotate applied to the model matrix
+	void rotate(float angle, float x, float y, float z) 
+	{
+		float aux[16];
+		MathHelp::setRotationMatrix(aux,angle,x,y,z);
+		MathHelp::multMatrix(modelMatrix,aux);
+		Render::setModelMatrix();
+	}
+
+	// The equivalent to glScale applied to the model matrix
+	void scale(float x, float y, float z)
+	{
+		float aux[16];
+		MathHelp::setScaleMatrix(aux,x,y,z);
+		MathHelp::multMatrix(modelMatrix,aux);
+		Render::setModelMatrix();
 	}
 
 } // end namespace Render

@@ -1,3 +1,6 @@
+#ifndef HELPERSTRUCTURES_H_
+#define HELPERSTRUCTURES_H_
+
 #include <IL/il.h>
 #include <GL/glew.h>
 #include <GL/freeglut.h>
@@ -24,3 +27,5 @@ namespace Helper
 		int texCount;
 	};
 }
+
+#endif

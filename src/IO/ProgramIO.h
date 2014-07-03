@@ -1,6 +1,9 @@
-#include "HelperStructures.h"
-#include "MathHelp.h"
-#include "View.h"
+#ifndef PROGRAMIO_H_
+#define PROGRAMIO_H_
+
+#include "../Helper/HelperStructures.h"
+#include "../Helper/MathHelp.h"
+#include "../View/View.h"
 
 namespace IO
 {
@@ -18,6 +21,8 @@ namespace IO
 	void processMouseButtons(int button, int state, int xx, int yy);
 
 	#define printOpenGLError() printOglError(__FILE__, __LINE__)
-	int printOglError(char *file, int line)
+	int printOglError(char *file, int line);
 
 } // end namespace IO
+
+#endif
