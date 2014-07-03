@@ -16,7 +16,7 @@ endif(NOT OPENGL_FOUND)
 #########################################################
 # Include Files
 #########################################################
-add_executable(test main.cpp textfile.cpp)
+add_executable(test src/Main/main.cpp src/MathHelp/MathHelp.cpp textfile.cpp)
 
 ########################################################
 # Linking & stuff
