@@ -1,5 +1,23 @@
 #include "Render.h"
 
+std::vector<struct Helper::MyMesh> myMeshes;
+
+// For push and pop matrix
+std::vector<float *> matrixStack;
+
+// Camera Position
+float camera[3] = {0, 0, 0};
+
+// mesh tranlation
+float translation[3] = {0, 0, 0};
+
+// Model Matrix (part of the OpenGL Model View Matrix)
+float modelMatrix[16];
+
+// Frame counting and FPS computation
+long time1,timebase = 0,frame = 0;
+char s[32];
+
 
 namespace Render
 {
@@ -21,16 +39,16 @@ namespace Render
 
 
 
-	void genVAOsAndUniformBuffer(const aiScene *sc, std::map<std::string, GLuint> * textureIdMap) {
+	void genVAOsAndUniformBuffer(std::map<std::string, GLuint> * textureIdMap) {
 
 		struct Helper::MyMesh aMesh;
 		struct Helper::MyMaterial aMat; 
 		GLuint buffer;
 		
 		// For each mesh
-		for (unsigned int n = 0; n < sc->mNumMeshes; ++n)
+		for (unsigned int n = 0; n < scene->mNumMeshes; ++n)
 		{
-			const aiMesh* mesh = sc->mMeshes[n];
+			const aiMesh* mesh = scene->mMeshes[n];
 
 			// create array with faces
 			// have to convert from Assimp format to array
@@ -44,7 +62,7 @@ namespace Render
 				memcpy(&faceArray[faceIndex], face->mIndices,3 * sizeof(unsigned int));
 				faceIndex += 3;
 			}
-			aMesh.numFaces = sc->mMeshes[n]->mNumFaces;
+			aMesh.numFaces = scene->mMeshes[n]->mNumFaces;
 
 			// generate Vertex Array for mesh
 			glGenVertexArrays(1,&(aMesh.vao));
@@ -95,7 +113,7 @@ namespace Render
 			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,0);
 		
 			// create material uniform buffer
-			aiMaterial *mtl = sc->mMaterials[mesh->mMaterialIndex];
+			aiMaterial *mtl = scene->mMaterials[mesh->mMaterialIndex];
 				
 			aiString texPath;	//contains filename of texture
 			if(AI_SUCCESS == mtl->GetTexture(aiTextureType_DIFFUSE, 0, &texPath)){
@@ -148,7 +166,7 @@ namespace Render
 
 
 
-	void recursive_render (const aiScene *sc, const aiNode* nd)
+	void recursive_render (const aiNode* nd)
 	{
 
 		// Get node transformation matrix
@@ -180,9 +198,16 @@ namespace Render
 
 		// draw all children
 		for (unsigned int n=0; n < nd->mNumChildren; ++n){
-			recursive_render(sc, nd->mChildren[n]);
+			recursive_render(nd->mChildren[n]);
 		}
 		popMatrix();
+	}
+
+
+	void timer(int x)
+	{
+		glutTimerFunc(10, timer, 1);
+		renderScene();
 	}
 
 
@@ -195,7 +220,7 @@ namespace Render
 
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		translate(translation[0], translation[1], translation[2]);
+		//translate(translation[0], translation[1], translation[2]);
 
 		//transx = 0; transy = 0; transz = 0;
 		// set camera matrix
@@ -218,7 +243,7 @@ namespace Render
 		// so we have set this uniform separately
 		glUniform1i(texUnit,0);
 
-		recursive_render(scene, scene->mRootNode);
+		recursive_render(scene->mRootNode);
 
 		// FPS computation and display
 		frame++;

@@ -1,11 +1,10 @@
 #ifndef MATHHELP_H_
 #define MATHHELP_H_
 
-#include <cmath>
-#include <iostream>
-#include <vector>
+
 #include <IL/il.h>
 #include <GL/glew.h>
+#include <GL/glut.h>
 #include <GL/freeglut.h>
 
 #include "assimp/Importer.hpp"	//OO version Header!
@@ -16,6 +15,9 @@
 #include <exception>
 #include <fstream>
 #include <map>
+#include <cmath>
+#include <iostream>
+#include <vector>
 
 #define aisgl_min(x,y) (x<y?x:y)
 #define aisgl_max(x,y) (y>x?y:x)
@@ -27,24 +29,28 @@
 #define MatrixSize sizeof(float) * 16
 
 // Uniform Bindings Points
-GLuint matricesUniLoc = 1, materialUniLoc = 2;
+extern GLuint matricesUniLoc;
+extern GLuint materialUniLoc;
 
-GLuint matricesUniBuffer;
+extern GLuint matricesUniBuffer;
 
 // Vertex Attribute Locations
-GLuint vertexLoc=0, normalLoc=1, texCoordLoc=2;
+extern GLuint vertexLoc;
+extern GLuint normalLoc;
+extern GLuint texCoordLoc;
 
 // Program and Shader Identifiers
-GLuint program, vertexShader, fragmentShader;
+extern GLuint program;
+extern GLuint vertexShader;
+extern GLuint fragmentShader;
 
-GLuint texUnit = 0;
+extern GLuint texUnit;
 
 // the global Assimp scene object
-const aiScene* scene = NULL;
+extern const aiScene* scene;;
 
 // scale factor for the model to fit in the window
-float scaleFactor;
-
+extern float scaleFactor;
 
 namespace MathHelp
 {

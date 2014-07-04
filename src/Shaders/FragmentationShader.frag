@@ -2,7 +2,7 @@
 
 layout (std140) uniform Material {
 	vec4 diffuse;
-	vec4 ambient;;
+	vec4 ambient;
 
 	vec4 specular;
 	vec4 emissive;

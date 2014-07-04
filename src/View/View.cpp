@@ -74,8 +74,6 @@ namespace View
 		glBindBuffer(GL_UNIFORM_BUFFER,0);
 	}
 
-	#define aisgl_min(x,y) (x<y?x:y)
-	#define aisgl_max(x,y) (y>x?y:x)
 
 	void get_bounding_box_for_node (const aiNode* nd, aiVector3D* min, aiVector3D* max, const aiScene* scene)
 	{
@@ -102,7 +100,7 @@ namespace View
 
 		for (n = 0; n < nd->mNumChildren; ++n)
 		{
-			get_bounding_box_for_node(nd->mChildren[n],min,max);
+			get_bounding_box_for_node(nd->mChildren[n],min,max, scene);
 		}
 	}
 
@@ -112,7 +110,7 @@ namespace View
 
 		min->x = min->y = min->z =  1e10f;
 		max->x = max->y = max->z = -1e10f;
-		get_bounding_box_for_node(scene->mRootNode,min,max);
+		get_bounding_box_for_node(scene->mRootNode,min,max, scene);
 	}
 
 } // end namespace View

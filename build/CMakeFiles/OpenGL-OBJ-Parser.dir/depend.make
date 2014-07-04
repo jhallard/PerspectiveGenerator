@@ -4,6 +4,10 @@
 CMakeFiles/OpenGL-OBJ-Parser.dir/src/Helper/MathHelp.cpp.o: ../src/Helper/MathHelp.cpp
 CMakeFiles/OpenGL-OBJ-Parser.dir/src/Helper/MathHelp.cpp.o: ../src/Helper/MathHelp.h
 
+CMakeFiles/OpenGL-OBJ-Parser.dir/src/IO/ProgramIO.cpp.o: ../src/IO/../Helper/HelperStructures.h
+CMakeFiles/OpenGL-OBJ-Parser.dir/src/IO/ProgramIO.cpp.o: ../src/IO/../Helper/MathHelp.h
+CMakeFiles/OpenGL-OBJ-Parser.dir/src/IO/ProgramIO.cpp.o: ../src/IO/../Rendering/Render.h
+CMakeFiles/OpenGL-OBJ-Parser.dir/src/IO/ProgramIO.cpp.o: ../src/IO/../View/View.h
 CMakeFiles/OpenGL-OBJ-Parser.dir/src/IO/ProgramIO.cpp.o: ../src/IO/ProgramIO.cpp
 CMakeFiles/OpenGL-OBJ-Parser.dir/src/IO/ProgramIO.cpp.o: ../src/IO/ProgramIO.h
 
@@ -23,11 +27,13 @@ CMakeFiles/OpenGL-OBJ-Parser.dir/src/Rendering/Render.cpp.o: ../src/Rendering/Re
 
 CMakeFiles/OpenGL-OBJ-Parser.dir/src/Shaders/ShaderFunctions.cpp.o: ../src/Shaders/../Helper/MathHelp.h
 CMakeFiles/OpenGL-OBJ-Parser.dir/src/Shaders/ShaderFunctions.cpp.o: ../src/Shaders/../IO/../Helper/HelperStructures.h
+CMakeFiles/OpenGL-OBJ-Parser.dir/src/Shaders/ShaderFunctions.cpp.o: ../src/Shaders/../IO/../Rendering/Render.h
 CMakeFiles/OpenGL-OBJ-Parser.dir/src/Shaders/ShaderFunctions.cpp.o: ../src/Shaders/../IO/../View/View.h
 CMakeFiles/OpenGL-OBJ-Parser.dir/src/Shaders/ShaderFunctions.cpp.o: ../src/Shaders/../IO/ProgramIO.h
 CMakeFiles/OpenGL-OBJ-Parser.dir/src/Shaders/ShaderFunctions.cpp.o: ../src/Shaders/ShaderFunctions.cpp
 CMakeFiles/OpenGL-OBJ-Parser.dir/src/Shaders/ShaderFunctions.cpp.o: ../src/Shaders/ShaderFunctions.h
 
+CMakeFiles/OpenGL-OBJ-Parser.dir/src/View/View.cpp.o: ../src/View/../Helper/MathHelp.h
 CMakeFiles/OpenGL-OBJ-Parser.dir/src/View/View.cpp.o: ../src/View/View.cpp
 CMakeFiles/OpenGL-OBJ-Parser.dir/src/View/View.cpp.o: ../src/View/View.h
 

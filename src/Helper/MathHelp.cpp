@@ -1,5 +1,25 @@
 #include "MathHelp.h"
 
+ GLuint matricesUniLoc = 1;
+ GLuint materialUniLoc = 2;
+
+ GLuint matricesUniBuffer;
+
+// Vertex Attribute Locations
+GLuint vertexLoc=0;
+GLuint normalLoc=1;
+GLuint texCoordLoc=2;
+
+// Program and Shader Identifiers
+GLuint program, vertexShader, fragmentShader;
+
+GLuint texUnit = 0;
+
+// the global Assimp scene object
+const aiScene* scene = NULL;
+
+// scale factor for the model to fit in the window
+float scaleFactor;
 
 namespace MathHelp
 {
@@ -113,7 +133,7 @@ namespace MathHelp
 		mat[15]= 1.0f;
 	}
 
-	
+
 	void set_float4(float f[4], float a, float b, float c, float d)
 	{
 		f[0] = a;

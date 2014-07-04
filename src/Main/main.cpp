@@ -24,13 +24,13 @@
 
 
 // Shader Names
-char *vertexfile;// = "../dirlightdiffambpix.vert";
-char *fragmentfile;// = "../dirlightdiffambpix.frag";
+char *vertexfile = "../src/Shaders/VertexShader.vert";
+char *fragmentfile = "../src/Shaders/FragmentationShader.frag";
 
 
 std::map<std::string, GLuint> * textureIdMap = new std::map<std::string, GLuint>();	
 
-static const std::string modelname;// = "../14db49e526f340dfba81c4a2da23c716/14db49e526f340dfba81c4a2da23c716.obj";
+static const std::string modelname = "../OBJ_Data/14db49e526f340dfba81c4a2da23c716/14db49e526f340dfba81c4a2da23c716.obj";
 
 
 // Camera Spherical Coordinates
@@ -51,7 +51,7 @@ int main(int argc, char **argv) {
 
 	glutInitWindowPosition(100,100);
 	glutInitWindowSize(1000,800);
-	glutCreateWindow("Lighthouse3D - Assimp Demo");
+	glutCreateWindow("OBJParser Demo");
 		
 
 //  Callback Registration
@@ -62,9 +62,8 @@ int main(int argc, char **argv) {
 //	Mouse and Keyboard Callbacks
 	glutKeyboardFunc(IO::processKeys);
 	glutMouseFunc(IO::processMouseButtons);
-	
-	//glutMotionFunc(IO::processMouseMotion);
-	//glutMouseWheelFunc ( mouseWheel ) ;
+	glutMotionFunc(IO::processMouseMotion);
+	glutMouseWheelFunc ( IO::mouseWheel ) ;
 
 //	Init GLEW
 	//glewExperimental = GL_TRUE;
@@ -89,8 +88,10 @@ int main(int argc, char **argv) {
 
 
    // return from main loop
-	glutSetOption(GLUT_ACTION_ON_WINDOW_CLOSE, GLUT_ACTION_GLUTMAINLOOP_RETURNS);
+   glutSetOption(GLUT_ACTION_ON_WINDOW_CLOSE, GLUT_ACTION_GLUTMAINLOOP_RETURNS);
 
+
+   //glutTimerFunc( 10, Render::timer, 1);
 
 	//  GLUT main loop
 	glutMainLoop();
@@ -110,10 +111,12 @@ int main(int argc, char **argv) {
 
 int init()					 
 {
-	if (!IO::Import3DFromFile(modelname, scene)) 
+	if (!IO::Import3DFromFile(modelname))
+	{
+		std::cout << "Failed 3d model import\n\n"<< std::endl; 
 		return(0);
-
-	IO::LoadGLTextures(scene, textureIdMap);
+	}
+	IO::LoadGLTextures(textureIdMap);
 
 	glGetUniformBlockIndex = (PFNGLGETUNIFORMBLOCKINDEXPROC) glutGetProcAddress("glGetUniformBlockIndex");
 	glUniformBlockBinding = (PFNGLUNIFORMBLOCKBINDINGPROC) glutGetProcAddress("glUniformBlockBinding");
@@ -125,7 +128,7 @@ int init()
 
 	program = Shaders::setupShaders(vertexfile, fragmentfile);
 
-	Render::genVAOsAndUniformBuffer(scene, textureIdMap);
+	Render::genVAOsAndUniformBuffer(textureIdMap);
 
 	glEnable(GL_DEPTH_TEST);		
 	glClearColor(1.0f, 1.0f, 1.0f, 0.0f);
@@ -141,9 +144,6 @@ int init()
 	glBindBuffer(GL_UNIFORM_BUFFER,0);
 
 	glEnable(GL_MULTISAMPLE);
-
-
-
 
 
 	return true;					
