@@ -12,6 +12,84 @@ float beta = 0.0f;
 namespace IO
 {
 
+	bool parseInputFile(char * name)
+	{
+		double values[6] = {0, 0, 0, 0, 0, 0}; // contains the x, y, z and perspective coordinated
+		double rotation[3] = {0, 0, 0};
+		
+		std::ifstream file(name);
+
+	    if (!file.is_open())
+	        return false;
+
+	    std::string str;
+
+	    // get the path to the .obj folder
+	    getline( file, str);
+	    path = str.c_str();
+
+	    // get the name of the obj file
+	    getline( file, str);
+	    modelname = str.c_str();
+
+	    // get the alpha, beta, r values for camera
+	    getline( file, str);
+	    int count = 0, j = 0;
+	    double value; 
+	    for(int i = 0; i < str.size(); i++)
+    	{
+    		std::string temp;
+    		if(str[i] == ' ' || str[i] == ',')
+    		{	
+    			temp = str.substr(j, i);
+    			value = atof(temp.c_str());
+    			rotation[count] = value;
+    			count++;
+    			j = i;
+    			temp = ' ';
+    		}
+    	}
+    	alpha = rotation[0];
+    	beta = rotation[1];
+    	r = rotation[2];
+
+
+    	// get the camxyz and lookat values.
+	    while(!file.eof())
+	    {
+	    	int j = 0;
+	    	double value;                         // the value of the item at the below index
+	    	int count;							  // the current index in the below array
+
+	    	getline(file, str);
+	    	for(int i = 0; i < str.size(); i++)
+	    	{
+	    		std::string temp;
+	    		if(str[i] == ' ' || str[i] == ',')
+	    		{	
+	    			temp = str.substr(j, i);
+	    			value = atof(temp.c_str());
+	    			values[count] = value;
+	    			count++;
+	    			j = i;
+	    			temp = ' ';
+	    		}
+	    	}
+	    }
+
+	    for(int i = 0; i < 6; i++)
+	    	std::cout << " Values " << i << " : " << values[i] << ",";
+	    for(int i = 0; i < 3; i++)
+	    	std::cout << " Rotation " << i << " : " << rotation[i] << ",";
+
+	    camera[0] = values[0];
+	    camera[1] = values[1];
+	    camera[2] = values[2];
+	    translation[3] = values[3];
+	    translation[4] = values[4];
+	    translation[5] = values[5];
+
+	}
 	bool Import3DFromFile(const std::string& pFile)//, const aiScene* scene)
 	{
 		std::ifstream fin(pFile.c_str());

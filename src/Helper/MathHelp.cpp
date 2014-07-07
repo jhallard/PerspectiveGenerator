@@ -26,12 +26,12 @@ float scaleFactor = 1;
 //const std::string modelname = "../OBJ_Data/bench.obj";//../OBJ_Data/14db49e526f340dfba81c4a2da23c716/14db49e526f340dfba81c4a2da23c716.obj";
 //const std::string path = "../OBJ_Data/";
 
-const std::string modelname = "../OBJ_Data/14db49e526f340dfba81c4a2da23c716/14db49e526f340dfba81c4a2da23c716.obj";
-const std::string path = "../OBJ_Data/14db49e526f340dfba81c4a2da23c716/";
+std::string modelname = "../OBJ_Data/14db49e526f340dfba81c4a2da23c716/14db49e526f340dfba81c4a2da23c716.obj";
+std::string path = "../OBJ_Data/14db49e526f340dfba81c4a2da23c716/";
 
 // Shader Names
-char *vertexfile = "../src/Shaders/Shader.vert";//"../dirlightdiffambpix.vert";//../src/Shaders/VertexShader.vert";
-char *fragmentfile = "../src/Shaders/Shader.frag";//"../dirlightdiffambpix.frag";//../src/Shaders/FragmentationShader.frag";//../src/Shaders/FragmentationShader.frag";	
+char *vertexfile = "../src/Shaders/Shader.vert";
+char *fragmentfile = "../src/Shaders/Shader.frag";
 
 std::vector<struct Helper::MyMesh> myMeshes;
 

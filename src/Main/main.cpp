@@ -53,7 +53,7 @@ int main(int argc, char **argv) {
 	glutMouseWheelFunc ( IO::mouseWheel ) ;
 
 //	Init GLEW
-	glewExperimental = GL_TRUE;
+	//glewExperimental = GL_TRUE;
 	glewInit();
 	if (glewIsSupported("GL_VERSION_3_3"))
 		printf("Ready for OpenGL 3.3\n");
@@ -62,7 +62,14 @@ int main(int argc, char **argv) {
 		return(1);
 	}
 
-//  Init the app (load model and textures) and OpenGL
+	if(argc == 2)
+		IO::parseInputFile(argv[1]);
+	else
+	{
+		std::cout << "Wrong number of command line arguments\n" << std::endl;
+	}
+
+	//  Init the app (load model and textures) and OpenGL
 	if (!init())
 	{
 		printf("Could not Load the Model\n");
@@ -74,8 +81,8 @@ int main(int argc, char **argv) {
    printf ("GLSL: %s\n", glGetString (GL_SHADING_LANGUAGE_VERSION));
 
 
-   // return from main loop
-   glutSetOption(GLUT_ACTION_ON_WINDOW_CLOSE, GLUT_ACTION_GLUTMAINLOOP_RETURNS);
+    // return from main loop
+    glutSetOption(GLUT_ACTION_ON_WINDOW_CLOSE, GLUT_ACTION_GLUTMAINLOOP_RETURNS);
 
 
 	glutMainLoop();
@@ -83,14 +90,7 @@ int main(int argc, char **argv) {
 	// cleaning up
 	textureIdMap.clear();  
 
-	for (unsigned int i = 0; i < myMeshes.size(); ++i) {
-				
-			glDeleteVertexArrays(1,&(myMeshes[i].vao));
-			glDeleteTextures(1,&(myMeshes[i].texIndex));
-			glDeleteBuffers(1,&(myMeshes[i].uniformBlockIndex));
-		}
-
-	//Render::clearMeshes();
+	Render::clearMeshes();
 
 	// delete buffers
 	glDeleteBuffers(1,&matricesUniBuffer);

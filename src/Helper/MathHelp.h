@@ -53,8 +53,8 @@ extern const aiScene* scene;
 // scale factor for the model to fit in the window
 extern float scaleFactor;
 
-extern const std::string modelname;// = "../OBJ_Data/bench.obj";//../OBJ_Data/14db49e526f340dfba81c4a2da23c716/14db49e526f340dfba81c4a2da23c716.obj";
-extern const std::string path;
+extern std::string modelname;// = "../OBJ_Data/bench.obj";//../OBJ_Data/14db49e526f340dfba81c4a2da23c716/14db49e526f340dfba81c4a2da23c716.obj";
+extern std::string path;
 // Shader Names
 extern char *vertexfile;// = "../src/Shaders/VertexShader.vert";//../src/Shaders/VertexShader.vert";
 extern char *fragmentfile;// = "../src/Shaders/FragmentationShader.frag";//../src/Shaders/FragmentationShader.frag";	

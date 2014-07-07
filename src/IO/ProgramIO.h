@@ -6,6 +6,9 @@
 #include "../View/View.h"
 #include "../Rendering/Render.h"
 
+#include <cstdlib>
+#include <iostream>
+
 
 // Create an instance of the Importer class
 extern Assimp::Importer importer;
@@ -16,7 +19,8 @@ extern float r;
 
 namespace IO
 {
-
+	bool parseInputFile(char *);
+	
 	bool Import3DFromFile(const std::string& pFile);
 
 	int LoadGLTextures();
