@@ -6,7 +6,7 @@
 
 #IncludeRegexTransform: 
 
-/home/robotics/HMCREU/OpenGL/OpenGL-OBJ-Parser/src/IO/../Helper/HelperStructures.h
+/home/robotics/HMCREU/OpenGL/OpenGL-OBJ-Parser/src/Helper/../Helper/HelperStructures.h
 IL/il.h
 -
 GL/glew.h
@@ -14,7 +14,13 @@ GL/glew.h
 GL/freeglut.h
 -
 
-/home/robotics/HMCREU/OpenGL/OpenGL-OBJ-Parser/src/IO/../Helper/MathHelp.h
+/home/robotics/HMCREU/OpenGL/OpenGL-OBJ-Parser/src/Helper/MathHelp.cpp
+MathHelp.h
+/home/robotics/HMCREU/OpenGL/OpenGL-OBJ-Parser/src/Helper/MathHelp.h
+
+/home/robotics/HMCREU/OpenGL/OpenGL-OBJ-Parser/src/Helper/MathHelp.h
+../Helper/HelperStructures.h
+/home/robotics/HMCREU/OpenGL/OpenGL-OBJ-Parser/src/Helper/../Helper/HelperStructures.h
 IL/il.h
 -
 GL/glew.h
@@ -24,11 +30,11 @@ GL/glut.h
 GL/freeglut.h
 -
 assimp/Importer.hpp
-/home/robotics/HMCREU/OpenGL/OpenGL-OBJ-Parser/src/IO/../Helper/assimp/Importer.hpp
+/home/robotics/HMCREU/OpenGL/OpenGL-OBJ-Parser/src/Helper/assimp/Importer.hpp
 assimp/postprocess.h
-/home/robotics/HMCREU/OpenGL/OpenGL-OBJ-Parser/src/IO/../Helper/assimp/postprocess.h
+/home/robotics/HMCREU/OpenGL/OpenGL-OBJ-Parser/src/Helper/assimp/postprocess.h
 assimp/scene.h
-/home/robotics/HMCREU/OpenGL/OpenGL-OBJ-Parser/src/IO/../Helper/assimp/scene.h
+/home/robotics/HMCREU/OpenGL/OpenGL-OBJ-Parser/src/Helper/assimp/scene.h
 string
 -
 exception
@@ -43,30 +49,4 @@ iostream
 -
 vector
 -
-
-/home/robotics/HMCREU/OpenGL/OpenGL-OBJ-Parser/src/IO/../Rendering/Render.h
-../Helper/MathHelp.h
-/home/robotics/HMCREU/OpenGL/OpenGL-OBJ-Parser/src/IO/../Rendering/../Helper/MathHelp.h
-../Helper/HelperStructures.h
-/home/robotics/HMCREU/OpenGL/OpenGL-OBJ-Parser/src/IO/../Rendering/../Helper/HelperStructures.h
-../View/View.h
-/home/robotics/HMCREU/OpenGL/OpenGL-OBJ-Parser/src/IO/../Rendering/../View/View.h
-
-/home/robotics/HMCREU/OpenGL/OpenGL-OBJ-Parser/src/IO/../View/View.h
-../Helper/MathHelp.h
-/home/robotics/HMCREU/OpenGL/OpenGL-OBJ-Parser/src/IO/../View/../Helper/MathHelp.h
-
-/home/robotics/HMCREU/OpenGL/OpenGL-OBJ-Parser/src/IO/ProgramIO.cpp
-ProgramIO.h
-/home/robotics/HMCREU/OpenGL/OpenGL-OBJ-Parser/src/IO/ProgramIO.h
-
-/home/robotics/HMCREU/OpenGL/OpenGL-OBJ-Parser/src/IO/ProgramIO.h
-../Helper/HelperStructures.h
-/home/robotics/HMCREU/OpenGL/OpenGL-OBJ-Parser/src/IO/../Helper/HelperStructures.h
-../Helper/MathHelp.h
-/home/robotics/HMCREU/OpenGL/OpenGL-OBJ-Parser/src/IO/../Helper/MathHelp.h
-../View/View.h
-/home/robotics/HMCREU/OpenGL/OpenGL-OBJ-Parser/src/IO/../View/View.h
-../Rendering/Render.h
-/home/robotics/HMCREU/OpenGL/OpenGL-OBJ-Parser/src/IO/../Rendering/Render.h
 

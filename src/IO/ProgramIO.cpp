@@ -35,7 +35,7 @@ namespace IO
 		printf("Import of scene %s succeeded.", pFile.c_str());
 
 		aiVector3D scene_min, scene_max, scene_center;
-		View::get_bounding_box(&scene_min, &scene_max, scene);
+		View::get_bounding_box(&scene_min, &scene_max);
 		float tmp;
 		tmp = scene_max.x-scene_min.x;
 		tmp = scene_max.y - scene_min.y > tmp?scene_max.y - scene_min.y:tmp;
@@ -46,7 +46,7 @@ namespace IO
 	}
 
 
-	int LoadGLTextures(std::map<std::string, GLuint> * textureIdMap)
+	int LoadGLTextures()
 	{
 		ILboolean success;
 
@@ -54,8 +54,10 @@ namespace IO
 		ilInit(); 
 
 		if(scene == NULL)
+		{
+			std::cout << "scene is null inside load textures\n" << std::endl;
 			return -1;
-
+		}
 		/* scan scene's materials for textures */
 		for (unsigned int m=0; m<scene->mNumMaterials; ++m)
 		{
@@ -63,9 +65,10 @@ namespace IO
 			aiString path;	// filename
 
 			aiReturn texFound = scene->mMaterials[m]->GetTexture(aiTextureType_DIFFUSE, texIndex, &path);
-			while (texFound == AI_SUCCESS) {
+			while (texFound == AI_SUCCESS)
+			{
 				//fill map with textures, OpenGL image ids set to 0
-				(*textureIdMap)[path.data] = 0; 
+				textureIdMap[path.data] = 0; 
 				// more textures?
 				texIndex++;
 				texFound = scene->mMaterials[m]->GetTexture(aiTextureType_DIFFUSE, texIndex, &path);
@@ -73,7 +76,7 @@ namespace IO
 		}
 
 
-		int numTextures = textureIdMap->size();
+		int numTextures = textureIdMap.size();
 
 		if(numTextures == 0)
 			std::cout << "0 textures inside programIO.cpp" << std::endl;
@@ -87,9 +90,9 @@ namespace IO
 		glGenTextures(numTextures, textureIds); /* Texture name generation */
 
 		/* get iterator */
-		std::map<std::string, GLuint>::iterator itr = textureIdMap->begin();
+		std::map<std::string, GLuint>::iterator itr = textureIdMap.begin();
 
-		for (int i=0; itr != textureIdMap->end(); ++i, ++itr)
+		for (int i=0; itr != textureIdMap.end(); ++i, ++itr)
 		{
 			//save IL image ID
 			std::string filename = (*itr).first;  // get filename
@@ -98,8 +101,6 @@ namespace IO
 			ilBindImage(imageIds[i]); /* Binding of DevIL image name */
 			ilEnable(IL_ORIGIN_SET);
 			ilOriginFunc(IL_ORIGIN_LOWER_LEFT); 
-			std::string path = "../OBJ_Data/14db49e526f340dfba81c4a2da23c716/";
-			//std::string path = "../c7130424fe904e71b69f4c5d02c55db3/";
 			success = ilLoadImage((ILstring)(path+filename).c_str());
 
 			if (success)
@@ -188,14 +189,20 @@ namespace IO
 		switch(key)
 		{
 			case 27: glutLeaveMainLoop();break;
-			// case 'z': r -= 0.1f; break;
-			// case 'x': r += 0.1f; break;	
-			// case 'm': glEnable(GL_MULTISAMPLE); break;
-			// case 'n': glDisable(GL_MULTISAMPLE); break;
+		    case 'z': r -= 0.1f; break;
+			case 'x': r += 0.1f; break;	
+			case 'm': glEnable(GL_MULTISAMPLE); break;
+			case 'n': glDisable(GL_MULTISAMPLE); break;
+			case 'w': translation[1] += f; break;
+			case 's': translation[1] += -f; break;
+			case 'a': translation[0] += -f; break;
+			case 'q': translation[0] += f; break;
+			case 'e': translation[2] += -f; break;
+			case 'd': translation[2] += f; break;
 		}
-		//camX = r * sin(alpha * 3.14f / 180.0f) * cos(beta * 3.14f / 180.0f);
-		//camZ = r * cos(alpha * 3.14f / 180.0f) * cos(beta * 3.14f / 180.0f);
-		//camY = r *   						     sin(beta * 3.14f / 180.0f);
+		camera[0] = r * sin(alpha * 3.14f / 180.0f) * cos(beta * 3.14f / 180.0f);
+		camera[1] = r * cos(alpha * 3.14f / 180.0f) * cos(beta * 3.14f / 180.0f);
+		camera[2] = r *   						      sin(beta * 3.14f / 180.0f);
 
 	//  uncomment this if not using an idle func
 		glutPostRedisplay();
@@ -205,7 +212,8 @@ namespace IO
 	void processMouseButtons(int button, int state, int xx, int yy) 
 	{
 		// start tracking the mouse
-		if (state == GLUT_DOWN)  {
+		if (state == GLUT_DOWN)  
+		{
 			startX = xx;
 			startY = yy;
 			if (button == GLUT_LEFT_BUTTON)
@@ -215,12 +223,15 @@ namespace IO
 		}
 
 		//stop tracking the mouse
-		else if (state == GLUT_UP) {
-			if (tracking == 1) {
+		else if (state == GLUT_UP)
+		 {
+			if (tracking == 1) 
+			{
 				alpha += (startX - xx);
 				beta += (yy - startY);
 			}
-			else if (tracking == 2) {
+			else if (tracking == 2)
+			{
 				r += (yy - startY) * 0.01f;
 			}
 			tracking = 0;
@@ -256,10 +267,8 @@ void processMouseMotion(int xx, int yy)
 		camera[1] = rAux * cos(betaAux * 3.14f / 180.0f) * cos(alphaAux * 3.14f / 180.0f);
 		camera[2] = rAux * sin(betaAux * 3.14f / 180.0f);
 	}
-	// right mouse button: zoom
 	else if (tracking == 2)
 	 {
-
 		alphaAux = alpha;
 		betaAux = beta;
 		rAux = r + (deltaY * 0.01f);
@@ -271,13 +280,14 @@ void processMouseMotion(int xx, int yy)
 
 
 //  uncomment this if not using an idle func
-//	glutPostRedisplay();
+	glutPostRedisplay();
 }
 
 
 
 
-void mouseWheel(int wheel, int direction, int x, int y) {
+void mouseWheel(int wheel, int direction, int x, int y) 
+{
 
 	r += direction * 0.1f;
 	camera[0] = r * sin(alpha * 3.14f / 180.0f) * cos(beta * 3.14f / 180.0f);

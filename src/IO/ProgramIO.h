@@ -17,9 +17,9 @@ extern float r;
 namespace IO
 {
 
-	bool Import3DFromFile(const std::string& pFile);//, const aiScene* scene);
+	bool Import3DFromFile(const std::string& pFile);
 
-	int LoadGLTextures(std::map<std::string, GLuint> * textureIdMap);
+	int LoadGLTextures();
 
 	void printProgramInfoLog(GLuint obj);
 
@@ -32,7 +32,7 @@ namespace IO
 	void processMouseMotion(int xx, int yy);
 
 	void mouseWheel(int wheel, int direction, int x, int y);
-	
+
 	#define printOpenGLError() printOglError(__FILE__, __LINE__)
 	int printOglError(char *file, int line);
 

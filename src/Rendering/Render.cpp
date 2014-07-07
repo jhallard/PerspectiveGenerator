@@ -1,24 +1,5 @@
 #include "Render.h"
 
-std::vector<struct Helper::MyMesh> myMeshes;
-
-// For push and pop matrix
-std::vector<float *> matrixStack;
-
-// Camera Position
-float camera[3] = {0, 0, 0};
-
-// mesh tranlation
-float translation[3] = {0, 0, 0};
-
-// Model Matrix (part of the OpenGL Model View Matrix)
-float modelMatrix[16];
-
-// Frame counting and FPS computation
-long time1,timebase = 0,frame = 0;
-char s[32];
-
-
 namespace Render
 {
 
@@ -39,7 +20,8 @@ namespace Render
 
 
 
-	void genVAOsAndUniformBuffer(std::map<std::string, GLuint> * textureIdMap) {
+	void genVAOsAndUniformBuffer() 
+	{
 
 		struct Helper::MyMesh aMesh;
 		struct Helper::MyMaterial aMat; 
@@ -56,12 +38,14 @@ namespace Render
 			faceArray = (unsigned int *)malloc(sizeof(unsigned int) * mesh->mNumFaces * 3);
 			unsigned int faceIndex = 0;
 
-			for (unsigned int t = 0; t < mesh->mNumFaces; ++t) {
+			for (unsigned int t = 0; t < mesh->mNumFaces; ++t) 
+			{
 				const aiFace* face = &mesh->mFaces[t];
 
 				memcpy(&faceArray[faceIndex], face->mIndices,3 * sizeof(unsigned int));
 				faceIndex += 3;
 			}
+
 			aMesh.numFaces = scene->mMeshes[n]->mNumFaces;
 
 			// generate Vertex Array for mesh
@@ -74,7 +58,8 @@ namespace Render
 			glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * mesh->mNumFaces * 3, faceArray, GL_STATIC_DRAW);
 
 			// buffer for vertex positions
-			if (mesh->HasPositions()) {
+			if (mesh->HasPositions()) 
+			{
 				glGenBuffers(1, &buffer);
 				glBindBuffer(GL_ARRAY_BUFFER, buffer);
 				glBufferData(GL_ARRAY_BUFFER, sizeof(float)*3*mesh->mNumVertices, mesh->mVertices, GL_STATIC_DRAW);
@@ -83,7 +68,8 @@ namespace Render
 			}
 
 			// buffer for vertex normals
-			if (mesh->HasNormals()) {
+			if (mesh->HasNormals()) 
+			{
 				glGenBuffers(1, &buffer);
 				glBindBuffer(GL_ARRAY_BUFFER, buffer);
 				glBufferData(GL_ARRAY_BUFFER, sizeof(float)*3*mesh->mNumVertices, mesh->mNormals, GL_STATIC_DRAW);
@@ -116,14 +102,18 @@ namespace Render
 			aiMaterial *mtl = scene->mMaterials[mesh->mMaterialIndex];
 				
 			aiString texPath;	//contains filename of texture
-			if(AI_SUCCESS == mtl->GetTexture(aiTextureType_DIFFUSE, 0, &texPath)){
-					//bind texture
-					unsigned int texId = (*textureIdMap)[texPath.data];
-					aMesh.texIndex = texId;
-					aMat.texCount = 1;
-				}
+			if(AI_SUCCESS == mtl->GetTexture(aiTextureType_DIFFUSE, 0, &texPath))
+			{
+				//bind texture
+				unsigned int texId = (textureIdMap)[texPath.data];
+				aMesh.texIndex = texId;
+				aMat.texCount = 1;
+			}
 			else
+			{
+				std::cout << "AI_SUCCESS = False for mtl->getTexture Render.cpp" << std::endl;
 				aMat.texCount = 0;
+			}
 
 			float c[4];
 			MathHelp::set_float4(c, 0.8f, 0.8f, 0.8f, 1.0f);
@@ -166,7 +156,7 @@ namespace Render
 
 
 
-	void recursive_render (const aiNode* nd)
+	void recursive_render(const aiNode* nd)
 	{
 
 		// Get node transformation matrix
@@ -197,17 +187,11 @@ namespace Render
 		}
 
 		// draw all children
-		for (unsigned int n=0; n < nd->mNumChildren; ++n){
+		for (unsigned int n=0; n < nd->mNumChildren; ++n)
+		{
 			recursive_render(nd->mChildren[n]);
 		}
 		popMatrix();
-	}
-
-
-	void timer(int x)
-	{
-		glutTimerFunc(10, timer, 1);
-		renderScene();
 	}
 
 
@@ -224,8 +208,9 @@ namespace Render
 
 		//transx = 0; transy = 0; transz = 0;
 		// set camera matrix
-		View::setCamera(camera[0], camera[1], camera[2],translation[0], translation[1], translation[2]);
+		//View::setCamera(camera[0], camera[1], camera[2],translation[0], translation[1], translation[2]);
 
+		View::setCamera(camera[0], camera[1], camera[2], 0, 0, 0);
 		// set the model matrix to the identity Matrix
 		MathHelp::setIdentityMatrix(modelMatrix,4);
 

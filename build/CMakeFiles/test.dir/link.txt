@@ -1,0 +1,1 @@
+/usr/bin/c++       CMakeFiles/test.dir/src/Main/test.cpp.o  -o test -rdynamic -lGL -lGLU -lIL -lGLEW -lglut -lX11 -lpthread /usr/local/lib/libassimp.so -Wl,-rpath,/usr/local/lib 

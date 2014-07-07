@@ -1,7 +1,9 @@
+#pragma once
+
 #ifndef MATHHELP_H_
 #define MATHHELP_H_
 
-
+#include "../Helper/HelperStructures.h"
 #include <IL/il.h>
 #include <GL/glew.h>
 #include <GL/glut.h>
@@ -22,17 +24,16 @@
 #define aisgl_min(x,y) (x<y?x:y)
 #define aisgl_max(x,y) (y>x?y:x)
 
+extern GLuint matricesUniBuffer;
 #define MatricesUniBufferSize sizeof(float) * 16 * 3
 #define ProjMatrixOffset 0
 #define ViewMatrixOffset sizeof(float) * 16
 #define ModelMatrixOffset sizeof(float) * 16 * 2
 #define MatrixSize sizeof(float) * 16
 
-// Uniform Bindings Points
 extern GLuint matricesUniLoc;
 extern GLuint materialUniLoc;
 
-extern GLuint matricesUniBuffer;
 
 // Vertex Attribute Locations
 extern GLuint vertexLoc;
@@ -47,10 +48,40 @@ extern GLuint fragmentShader;
 extern GLuint texUnit;
 
 // the global Assimp scene object
-extern const aiScene* scene;;
+extern const aiScene* scene;
 
 // scale factor for the model to fit in the window
 extern float scaleFactor;
+
+extern const std::string modelname;// = "../OBJ_Data/bench.obj";//../OBJ_Data/14db49e526f340dfba81c4a2da23c716/14db49e526f340dfba81c4a2da23c716.obj";
+extern const std::string path;
+// Shader Names
+extern char *vertexfile;// = "../src/Shaders/VertexShader.vert";//../src/Shaders/VertexShader.vert";
+extern char *fragmentfile;// = "../src/Shaders/FragmentationShader.frag";//../src/Shaders/FragmentationShader.frag";	
+
+extern std::map<std::string, GLuint> textureIdMap;// = new std::map<std::string, GLuint>();
+
+extern std::vector<struct Helper::MyMesh> myMeshes;
+
+// For push and pop matrix
+extern std::vector<float *> matrixStack;
+
+// Camera Position
+extern float camera[3];
+
+// mesh tranlation
+extern float translation[3];
+
+// Model Matrix (part of the OpenGL Model View Matrix)
+extern float modelMatrix[16];
+
+// Frame counting and FPS computation
+extern long time1;
+extern long timebase;
+extern long frame;
+
+extern char s[32];
+
 
 namespace MathHelp
 {

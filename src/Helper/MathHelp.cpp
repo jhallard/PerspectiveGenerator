@@ -1,17 +1,19 @@
 #include "MathHelp.h"
 
- GLuint matricesUniLoc = 1;
- GLuint materialUniLoc = 2;
+GLuint matricesUniLoc = 1;
+GLuint materialUniLoc = 2;
 
- GLuint matricesUniBuffer;
+GLuint matricesUniBuffer = 0;
+
+ // Program and Shader Identifiers
+GLuint program = 0;
+GLuint vertexShader = 0;
+GLuint fragmentShader = 0;
 
 // Vertex Attribute Locations
 GLuint vertexLoc=0;
 GLuint normalLoc=1;
 GLuint texCoordLoc=2;
-
-// Program and Shader Identifiers
-GLuint program, vertexShader, fragmentShader;
 
 GLuint texUnit = 0;
 
@@ -19,7 +21,41 @@ GLuint texUnit = 0;
 const aiScene* scene = NULL;
 
 // scale factor for the model to fit in the window
-float scaleFactor;
+float scaleFactor = 1;
+
+//const std::string modelname = "../OBJ_Data/bench.obj";//../OBJ_Data/14db49e526f340dfba81c4a2da23c716/14db49e526f340dfba81c4a2da23c716.obj";
+//const std::string path = "../OBJ_Data/";
+
+const std::string modelname = "../OBJ_Data/14db49e526f340dfba81c4a2da23c716/14db49e526f340dfba81c4a2da23c716.obj";
+const std::string path = "../OBJ_Data/14db49e526f340dfba81c4a2da23c716/";
+
+// Shader Names
+char *vertexfile = "../src/Shaders/Shader.vert";//"../dirlightdiffambpix.vert";//../src/Shaders/VertexShader.vert";
+char *fragmentfile = "../src/Shaders/Shader.frag";//"../dirlightdiffambpix.frag";//../src/Shaders/FragmentationShader.frag";//../src/Shaders/FragmentationShader.frag";	
+
+std::vector<struct Helper::MyMesh> myMeshes;
+
+// For push and pop matrix
+std::vector<float *> matrixStack;
+
+// Camera Position
+float camera[3] = {0, 0, 0};
+
+// mesh tranlation
+float translation[3] = {3, 2, 1};
+
+// Model Matrix (part of the OpenGL Model View Matrix)
+float modelMatrix[16];
+
+// Frame counting and FPS computation
+long time1 = 0;
+long timebase = 0;
+long frame = 0;
+
+char s[32];
+
+
+std::map<std::string, GLuint> textureIdMap;
 
 namespace MathHelp
 {

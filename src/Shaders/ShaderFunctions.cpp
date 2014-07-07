@@ -32,6 +32,10 @@ namespace Shaders
 				}
 				fclose(fp);
 			}
+			else
+			{
+				std::cout << "fp NULL inside textFileRead" << std::endl;
+			}
 		}
 		else
 		{
@@ -48,59 +52,58 @@ namespace Shaders
 
 		char *vs = NULL,*fs = NULL,*fs2 = NULL;
 
-		GLuint p,v,f;
+		//GLuint p,v,f;
 
-		v = glCreateShader(GL_VERTEX_SHADER);
-		f = glCreateShader(GL_FRAGMENT_SHADER);
+		vertexShader = glCreateShader(GL_VERTEX_SHADER);
+		fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
+
+		if(vertexShader == 0 || fragmentShader == 0)
+			std::cout << " Error with glCreateShader" << std::endl;
 
 		vs = textFileRead(vertexfile);
 		fs = textFileRead(fragmentfile);
 
 		if(vs == NULL) 
 			std::cout << "vs files null\n" << std::endl;
-		if((fs == NULL))
+		if(fs == NULL)
 			std::cout << "fs files null\n" << std::endl;
 
 		const char * vv = vs;
 		const char * ff = fs;
 
-		glShaderSource(v, 1, &vv,NULL);
-		glShaderSource(f, 1, &ff,NULL);
+		glShaderSource(vertexShader, 1, &vv,NULL);
+		glShaderSource(fragmentShader, 1, &ff,NULL);
 
 
 		free(vs);free(fs);
 
-		glCompileShader(v);
-		glCompileShader(f);
+		glCompileShader(vertexShader);
+		glCompileShader(fragmentShader);
 
-		printShaderInfoLog(v);
-		printShaderInfoLog(f);
+		printShaderInfoLog(vertexShader);
+		printShaderInfoLog(fragmentShader);
 
-		p = glCreateProgram();
-		glAttachShader(p,v);
-		glAttachShader(p,f);
+		program = glCreateProgram();
+		glAttachShader(program,vertexShader);
+		glAttachShader(program,fragmentShader);
 
-		glBindFragDataLocation(p, 0, "output");
+		glBindFragDataLocation(program, 0, "output");
 
-		glBindAttribLocation(p,vertexLoc,"position");
-		glBindAttribLocation(p,normalLoc,"normal");
-		glBindAttribLocation(p,texCoordLoc,"texCoord");
+		glBindAttribLocation(program,vertexLoc,"position");
+		glBindAttribLocation(program,normalLoc,"normal");
+		glBindAttribLocation(program,texCoordLoc,"texCoord");
 
-		glLinkProgram(p);
-		glValidateProgram(p);
-		IO::printProgramInfoLog(p);
+		glLinkProgram(program);
+		glValidateProgram(program);
+		IO::printProgramInfoLog(program);
 
-		program = p;
-		vertexShader = v;
-		fragmentShader = f;
-		
-		GLuint k = glGetUniformBlockIndex(p,"Matrices");
-		glUniformBlockBinding(p, k, matricesUniLoc);
-		glUniformBlockBinding(p, glGetUniformBlockIndex(p,"Material"), materialUniLoc);
+		GLuint k = glGetUniformBlockIndex(program,"Matrices");
+		glUniformBlockBinding(program, k, matricesUniLoc);
+		glUniformBlockBinding(program, glGetUniformBlockIndex(program,"Material"), materialUniLoc);
 
-		texUnit = glGetUniformLocation(p,"texUnit");
+		texUnit = glGetUniformLocation(program,"texUnit");
 
-		return(p);
+		return(program);
 	}
 
 

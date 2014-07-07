@@ -19,11 +19,14 @@ SET(OBJ-Parser_HEADERS ${OBJ-Parser_HDRS} src/Shaders/ShaderFunctions.h src/View
 #########################################################
 # Include Files
 #########################################################
-add_executable(OpenGL-OBJ-Parser ${OBJ-Parser_SOURCES}
-    ${OBJ-Parser_HEADERS_MOC}
-    ${OBJ-Parser_FORMS_HEADERS} )
+add_executable(OpenGL-OBJ-Parser ${OBJ-Parser_SOURCES} ${OBJ-Parser_HEADERS_MOC} ${OBJ-Parser_FORMS_HEADERS} )
 
 ########################################################
 # Linking & stuff
 #########################################################
 target_link_libraries(OpenGL-OBJ-Parser GL GLU IL GLEW glut X11 pthread /usr/local/lib/libassimp.so)
+
+
+cmake_minimum_required (VERSION 2.6)
+project (testing)
+

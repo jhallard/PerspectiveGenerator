@@ -75,7 +75,7 @@ namespace View
 	}
 
 
-	void get_bounding_box_for_node (const aiNode* nd, aiVector3D* min, aiVector3D* max, const aiScene* scene)
+	void get_bounding_box_for_node (const aiNode* nd, aiVector3D* min, aiVector3D* max)
 	{
 		aiMatrix4x4 prev;
 		unsigned int n = 0, t;
@@ -100,17 +100,17 @@ namespace View
 
 		for (n = 0; n < nd->mNumChildren; ++n)
 		{
-			get_bounding_box_for_node(nd->mChildren[n],min,max, scene);
+			get_bounding_box_for_node(nd->mChildren[n],min,max);
 		}
 	}
 
 
-	void get_bounding_box (aiVector3D* min, aiVector3D* max, const aiScene* scene)
+	void get_bounding_box (aiVector3D* min, aiVector3D* max)
 	{
 
 		min->x = min->y = min->z =  1e10f;
 		max->x = max->y = max->z = -1e10f;
-		get_bounding_box_for_node(scene->mRootNode,min,max, scene);
+		get_bounding_box_for_node(scene->mRootNode,min,max);
 	}
 
 } // end namespace View

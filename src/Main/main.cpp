@@ -15,36 +15,23 @@
 #include <vector>
 #include <iostream>
 
-#include "../Helper/MathHelp.h"
-#include "../Helper/HelperStructures.h"
+//#include "../Helper/MathHelp.h"
+//#include "../Helper/HelperStructures.h"
 #include "../View/View.h"
 #include "../Rendering/Render.h"
 #include "../Shaders/ShaderFunctions.h"
 #include "../IO/ProgramIO.h"
 
 
-// Shader Names
-char *vertexfile = "../src/Shaders/VertexShader.vert";
-char *fragmentfile = "../src/Shaders/FragmentationShader.frag";
-
-
-std::map<std::string, GLuint> * textureIdMap = new std::map<std::string, GLuint>();	
-
-static const std::string modelname = "../OBJ_Data/14db49e526f340dfba81c4a2da23c716/14db49e526f340dfba81c4a2da23c716.obj";
-
-
-// Camera Spherical Coordinates
-//float alpha = 0.0f, beta = 0.0f, float r = 5.0f;
-
-
 int init();
+
 
 int main(int argc, char **argv) {
 
 //  GLUT initialization
 	glutInit(&argc, argv);
 
-	glutInitDisplayMode(GLUT_DEPTH|GLUT_DOUBLE|GLUT_RGBA|GLUT_MULTISAMPLE );
+	glutInitDisplayMode(GLUT_DEPTH|GLUT_DOUBLE|GLUT_RGBA);//|GLUT_MULTISAMPLE );
 
 	glutInitContextVersion (3, 3);
 	glutInitContextFlags (GLUT_COMPATIBILITY_PROFILE );
@@ -66,7 +53,7 @@ int main(int argc, char **argv) {
 	glutMouseWheelFunc ( IO::mouseWheel ) ;
 
 //	Init GLEW
-	//glewExperimental = GL_TRUE;
+	glewExperimental = GL_TRUE;
 	glewInit();
 	if (glewIsSupported("GL_VERSION_3_3"))
 		printf("Ready for OpenGL 3.3\n");
@@ -91,15 +78,19 @@ int main(int argc, char **argv) {
    glutSetOption(GLUT_ACTION_ON_WINDOW_CLOSE, GLUT_ACTION_GLUTMAINLOOP_RETURNS);
 
 
-   //glutTimerFunc( 10, Render::timer, 1);
-
-	//  GLUT main loop
 	glutMainLoop();
 
 	// cleaning up
-	textureIdMap->clear();  
+	textureIdMap.clear();  
 
-	Render::clearMeshes();
+	for (unsigned int i = 0; i < myMeshes.size(); ++i) {
+				
+			glDeleteVertexArrays(1,&(myMeshes[i].vao));
+			glDeleteTextures(1,&(myMeshes[i].texIndex));
+			glDeleteBuffers(1,&(myMeshes[i].uniformBlockIndex));
+		}
+
+	//Render::clearMeshes();
 
 	// delete buffers
 	glDeleteBuffers(1,&matricesUniBuffer);
@@ -116,7 +107,7 @@ int init()
 		std::cout << "Failed 3d model import\n\n"<< std::endl; 
 		return(0);
 	}
-	IO::LoadGLTextures(textureIdMap);
+	IO::LoadGLTextures();
 
 	glGetUniformBlockIndex = (PFNGLGETUNIFORMBLOCKINDEXPROC) glutGetProcAddress("glGetUniformBlockIndex");
 	glUniformBlockBinding = (PFNGLUNIFORMBLOCKBINDINGPROC) glutGetProcAddress("glUniformBlockBinding");
@@ -128,7 +119,7 @@ int init()
 
 	program = Shaders::setupShaders(vertexfile, fragmentfile);
 
-	Render::genVAOsAndUniformBuffer(textureIdMap);
+	Render::genVAOsAndUniformBuffer();
 
 	glEnable(GL_DEPTH_TEST);		
 	glClearColor(1.0f, 1.0f, 1.0f, 0.0f);
@@ -140,7 +131,7 @@ int init()
 	glGenBuffers(1,&matricesUniBuffer);
 	glBindBuffer(GL_UNIFORM_BUFFER, matricesUniBuffer);
 	glBufferData(GL_UNIFORM_BUFFER, MatricesUniBufferSize,NULL,GL_DYNAMIC_DRAW);
-	glBindBufferRange(GL_UNIFORM_BUFFER, matricesUniLoc, matricesUniBuffer, 0, MatricesUniBufferSize);	//setUniforms();
+	glBindBufferRange(GL_UNIFORM_BUFFER, matricesUniLoc, matricesUniBuffer, 0, MatricesUniBufferSize);	
 	glBindBuffer(GL_UNIFORM_BUFFER,0);
 
 	glEnable(GL_MULTISAMPLE);
