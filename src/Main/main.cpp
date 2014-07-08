@@ -45,7 +45,7 @@ int main(int argc, char **argv)
     glutInitContextFlags (GLUT_COMPATIBILITY_PROFILE );
 
     glutInitWindowPosition(100,100);
-    glutInitWindowSize(1000,800);
+    glutInitWindowSize(width, height);
     glutCreateWindow("OBJParser Demo");
         
 

@@ -55,6 +55,9 @@ std::vector<std::vector<float> > perspectiveList;
 int currentPerspective = 0;
 int perspectiveCount = 0;
 
+int width = 1000;
+int height = 800;
+
 
 std::map<std::string, GLuint> textureIdMap;
 

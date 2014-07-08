@@ -86,6 +86,9 @@ extern std::vector<std::vector<float> > perspectiveList;
 extern int currentPerspective;
 extern int perspectiveCount;
 
+extern int width;
+extern int height;
+
 
 namespace MathHelp
 {

@@ -32,47 +32,24 @@ namespace IO
         getline( file, str);
         modelname = str.c_str();
 
-        // get the alpha, beta, r values for camera
-        getline( file, str);
-        int count = 0, j = 0;
-        double value; 
-        for(int i = 0; i < str.size(); i++)
-        {
-            std::string temp;
-            if(str[i] == ' ' || str[i] == ',')
-            {   
-                temp = str.substr(j, i);
-                value = atof(temp.c_str());
-                rotation[count] = value;
-                count++;
-                j = i;
-                temp = ' ';
-            }
-        }
-        alpha = rotation[0];
-        beta = rotation[1];
-        r = rotation[2];
-
-
         // get the camxyz and lookat values.
         while(!file.eof())
         {
             int j = 0;
-            double value;                         // the value of the item at the below index
+            double value = 0;                         // the value of the item at the below index
             int count = 0;                            // the current index in the below array
 
             getline(file, str);
             for(int i = 0; i < str.size() && count < 6; i++)
             {
-                std::string temp;
                 if(str[i] == ' ' || str[i] == ',')
                 {   
+                    std::string temp;
                     temp = str.substr(j, i);
                     value = atof(temp.c_str());
                     values[count] = value;
                     count++;
                     j = i;
-                    temp = ' ';
                 }
             }
             std::vector<float> temp;
@@ -83,16 +60,16 @@ namespace IO
             perspectiveCount++;
         }
 
-        std::cout << perspectiveCount << std::endl;
-        std::cout << " Perspective Values : {";
-        for(int i = 0; i < 6; i++)
-            std::cout << perspectiveList[0][i] << ", ";
-        std::cout << "}" << std::endl;
+        std::cout << perspectiveCount << " Perspectives Detected" << std::endl;
+        // std::cout << " Perspective Values : {";
+        // for(int i = 0; i < 6; i++)
+        //     std::cout << perspectiveList[0][i] << ", ";
+        // std::cout << "}" << std::endl;
 
-        std::cout << " Rotation Values : {";
-        for(int i = 0; i < 3; i++)
-            std::cout << rotation[i] << ", ";
-        std::cout << "}" << std::endl;
+        // std::cout << " Rotation Values : {";
+        // for(int i = 0; i < 3; i++)
+        //     std::cout << rotation[i] << ", ";
+        // std::cout << "}" << std::endl;
 
         camera[0] = perspectiveList[0][0];
         camera[1] = perspectiveList[0][1];
@@ -254,7 +231,7 @@ namespace IO
         glViewport(0, 0, w, h);
 
         ratio = (1.0f * w) / h;
-        View::buildProjectionMatrix(53.13f, ratio, 0.1f, 100.0f);
+        View::buildProjectionMatrix(60.13f, ratio, 0.0001f, 100.0f);
     }
 
     #define printOpenGLError() printOglError(__FILE__, __LINE__)
@@ -273,8 +250,14 @@ namespace IO
         return retCode;
     }
 
+
     bool nextLocation()
     {
+
+        unsigned char * pixels = new unsigned char[width * height * 4 ];
+        glReadPixels( 0, 0, width, height, GL_RGBA, GL_UNSIGNED_BYTE, pixels );
+
+        delete [] pixels;
          currentPerspective++;
         if(currentPerspective >= perspectiveCount)
             currentPerspective = 0;
@@ -283,7 +266,7 @@ namespace IO
 
         std::vector<float> temp = perspectiveList[currentPerspective];
 
-        if(true)//temp.size() == 6)
+        if(temp.size() == 6)
         {
             camera[0] = temp[0];
             camera[1] = temp[1];
@@ -296,6 +279,7 @@ namespace IO
         std::cout << camera[0] << ", " << camera[1] << ", " << camera[2] << std::endl;
         glutPostRedisplay();
     }
+
 
     void processKeys(unsigned char key, int xx, int yy) 
     {
