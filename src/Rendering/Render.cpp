@@ -209,8 +209,8 @@ namespace Render
 		//transx = 0; transy = 0; transz = 0;
 		// set camera matrix
 		//View::setCamera(camera[0], camera[1], camera[2],translation[0], translation[1], translation[2]);
-
-		View::setCamera(camera[0]+step, camera[1], camera[2]-step, step, 0, -step);
+		translate(-(translation[0]+step), -translation[1], -(translation[2]+step));
+		View::setCamera(camera[0]+step, camera[1], camera[2]+step, -(translation[0]+step), translation[1], -(translation[2]+step));
 		step += .02;
 		// set the model matrix to the identity Matrix
 		MathHelp::setIdentityMatrix(modelMatrix,4);
@@ -274,7 +274,7 @@ namespace Render
 		float aux[16];
 		MathHelp::setTranslationMatrix(aux,x,y,z);
 		MathHelp::multMatrix(modelMatrix,aux);
-		Render:setModelMatrix();
+		Render::setModelMatrix();
 	}
 
 	// The equivalent to glRotate applied to the model matrix
