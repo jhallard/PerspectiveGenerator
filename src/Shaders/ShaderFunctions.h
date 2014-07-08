@@ -12,11 +12,11 @@
 namespace Shaders
 {
 
-	char *textFileRead(char *fn);
+    char *textFileRead(char *fn);
 
-	void printShaderInfoLog(GLuint obj);
+    void printShaderInfoLog(GLuint obj);
 
-	GLuint setupShaders(char * vertexfile, char * fragmentfile);
+    GLuint setupShaders(char * vertexfile, char * fragmentfile);
 
 }// end namespace
 

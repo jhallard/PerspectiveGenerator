@@ -9,7 +9,7 @@
 #include <GL/glut.h>
 #include <GL/freeglut.h>
 
-#include "assimp/Importer.hpp"	//OO version Header!
+#include "assimp/Importer.hpp"  //OO version Header!
 #include "assimp/postprocess.h"
 #include "assimp/scene.h"
 
@@ -57,7 +57,7 @@ extern std::string modelname;// = "../OBJ_Data/bench.obj";//../OBJ_Data/14db49e5
 extern std::string path;
 // Shader Names
 extern char *vertexfile;// = "../src/Shaders/VertexShader.vert";//../src/Shaders/VertexShader.vert";
-extern char *fragmentfile;// = "../src/Shaders/FragmentationShader.frag";//../src/Shaders/FragmentationShader.frag";	
+extern char *fragmentfile;// = "../src/Shaders/FragmentationShader.frag";//../src/Shaders/FragmentationShader.frag";    
 
 extern std::map<std::string, GLuint> textureIdMap;// = new std::map<std::string, GLuint>();
 
@@ -86,36 +86,36 @@ extern char s[32];
 namespace MathHelp
 {
 
-	float  DegToRad(float degrees);
+    float  DegToRad(float degrees);
 
-	void color4_to_float4(const aiColor4D *c, float f[4]);
+    void color4_to_float4(const aiColor4D *c, float f[4]);
 
-	void set_float4(float f[4], float a, float b, float c, float d);
+    void set_float4(float f[4], float a, float b, float c, float d);
 
-	// res = a cross b;
-	void crossProduct( float *a, float *b, float *res);
-
-
-	// Normalize a vec3
-	void normalize(float *a);
-
-	// sets the square matrix mat to the identity matrix,
-	// size refers to the number of rows (or columns)
-	void setIdentityMatrix( float *mat, int size);
-
-	// a = a * b;
-	void multMatrix(float *a, float *b);
+    // res = a cross b;
+    void crossProduct( float *a, float *b, float *res);
 
 
-	// Defines a transformation matrix mat with a translation
-	void setTranslationMatrix(float *mat, float x, float y, float z);
+    // Normalize a vec3
+    void normalize(float *a);
 
-	// Defines a transformation matrix mat with a scale
-	void setScaleMatrix(float *mat, float sx, float sy, float sz);
+    // sets the square matrix mat to the identity matrix,
+    // size refers to the number of rows (or columns)
+    void setIdentityMatrix( float *mat, int size);
 
-	// Defines a transformation matrix mat with a rotation 
-	// angle alpha and a rotation axis (x,y,z)
-	void setRotationMatrix(float *mat, float angle, float x, float y, float z);
+    // a = a * b;
+    void multMatrix(float *a, float *b);
+
+
+    // Defines a transformation matrix mat with a translation
+    void setTranslationMatrix(float *mat, float x, float y, float z);
+
+    // Defines a transformation matrix mat with a scale
+    void setScaleMatrix(float *mat, float sx, float sy, float sz);
+
+    // Defines a transformation matrix mat with a rotation 
+    // angle alpha and a rotation axis (x,y,z)
+    void setRotationMatrix(float *mat, float angle, float x, float y, float z);
 
 } // end namespace
 
