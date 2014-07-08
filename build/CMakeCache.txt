@@ -14,6 +14,15 @@
 # EXTERNAL cache entries
 ########################
 
+//The directory containing a CMake configuration file for Boost.
+Boost_DIR:PATH=Boost_DIR-NOTFOUND
+
+//Path to a file.
+Boost_INCLUDE_DIR:PATH=/usr/include
+
+//Boost library directory
+Boost_LIBRARY_DIRS:FILEPATH=/usr/lib
+
 //Path to a program.
 CMAKE_AR:FILEPATH=/usr/bin/ar
 
@@ -116,7 +125,7 @@ CMAKE_OBJCOPY:FILEPATH=/usr/bin/objcopy
 CMAKE_OBJDUMP:FILEPATH=/usr/bin/objdump
 
 //Value Computed by CMake
-CMAKE_PROJECT_NAME:STATIC=testing
+CMAKE_PROJECT_NAME:STATIC=OBJ-Parser
 
 //Path to a program.
 CMAKE_RANLIB:FILEPATH=/usr/bin/ranlib
@@ -168,6 +177,9 @@ OPENGL_glu_LIBRARY:FILEPATH=/usr/lib/x86_64-linux-gnu/libGLU.so
 
 //Path to a file.
 OPENGL_xmesa_INCLUDE_DIR:PATH=OPENGL_xmesa_INCLUDE_DIR-NOTFOUND
+
+//The directory containing a CMake configuration file for OpenCV.
+OpenCV_DIR:PATH=/usr/share/OpenCV
 
 //Path to a file.
 X11_ICE_INCLUDE_PATH:PATH=/usr/include
@@ -343,6 +355,9 @@ X11_xf86misc_INCLUDE_PATH:PATH=X11_xf86misc_INCLUDE_PATH-NOTFOUND
 //Path to a file.
 X11_xf86vmode_INCLUDE_PATH:PATH=/usr/include
 
+//The directory containing a CMake configuration file for catkin.
+catkin_DIR:PATH=catkin_DIR-NOTFOUND
+
 //Value Computed by CMake
 testing_BINARY_DIR:STATIC=/home/robotics/HMCREU/OpenGL/PerspectiveGenerator/build
 
@@ -354,6 +369,14 @@ testing_SOURCE_DIR:STATIC=/home/robotics/HMCREU/OpenGL/PerspectiveGenerator
 # INTERNAL cache entries
 ########################
 
+//ADVANCED property for variable: Boost_INCLUDE_DIR
+Boost_INCLUDE_DIR-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: Boost_LIBRARY_DIRS
+Boost_LIBRARY_DIRS-ADVANCED:INTERNAL=1
+//The library version string for boost libraries
+Boost_LIB_VERSION:INTERNAL=1_46_1
+//The version number for boost libraries
+Boost_VERSION:INTERNAL=104601
 //ADVANCED property for variable: CMAKE_AR
 CMAKE_AR-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_BUILD_TOOL

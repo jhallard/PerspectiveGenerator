@@ -1,0 +1,4 @@
+../OBJ_Data/Bench/
+../OBJ_Data/Bench/bench.obj
+6 1 5
+2 2 0 -2 -2 0   

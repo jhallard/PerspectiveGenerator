@@ -241,6 +241,39 @@ namespace Render
         // swap buffers
         glutSwapBuffers();
 
+
+        if(start)
+        {
+            unsigned char * pixels = new unsigned char[width * height * 3 ];
+            glReadPixels( 0, 0, width, height, GL_BGR, GL_UNSIGNED_BYTE, pixels );
+            cv::Mat image(height, width, CV_8UC3);
+            int index = 0;
+            for(int i = 0; i < height; i++)
+            {
+                for(int j = 0; j < width; j++)
+                {
+                    cv::Point3_<uchar> * p = image.ptr<cv::Point3_<uchar> >(height-i-1, j);
+                    p->x = pixels[index++];
+                    p->y = pixels[index++];
+                    p->z = pixels[index++];
+                }
+            }
+            std::stringstream ss;
+            ss << "../GeneratedImages/picture" << imageNum << ".png";
+            std::string z = ss.str();
+            cv::imwrite(z, image);
+            imageNum++;
+            delete [] pixels;
+
+            IO::nextLocation(1);
+
+            if(imageNum == perspectiveCount)
+            {
+                imageNum = 0;
+                start = false;
+            }
+        }
+
         // increase the rotation angle
         //step++;
     }

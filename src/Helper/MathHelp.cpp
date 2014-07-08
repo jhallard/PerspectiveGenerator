@@ -54,6 +54,8 @@ char s[32];
 std::vector<std::vector<float> > perspectiveList;
 int currentPerspective = 0;
 int perspectiveCount = 0;
+bool start = false;
+int imageNum = 0;
 
 int width = 1000;
 int height = 800;

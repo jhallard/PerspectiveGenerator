@@ -107,7 +107,7 @@ namespace IO
         tmp = scene_max.x-scene_min.x;
         tmp = scene_max.y - scene_min.y > tmp?scene_max.y - scene_min.y:tmp;
         tmp = scene_max.z - scene_min.z > tmp?scene_max.z - scene_min.z:tmp;
-        scaleFactor = 1.f / tmp;
+        scaleFactor = 10.f / tmp;
 
         return true;
     }
@@ -251,18 +251,13 @@ namespace IO
     }
 
 
-    bool nextLocation()
+    void nextLocation(int)
     {
-
-        unsigned char * pixels = new unsigned char[width * height * 4 ];
-        glReadPixels( 0, 0, width, height, GL_RGBA, GL_UNSIGNED_BYTE, pixels );
-
-        delete [] pixels;
          currentPerspective++;
         if(currentPerspective >= perspectiveCount)
             currentPerspective = 0;
 
-        std::cout << "Switch to perspective #" << currentPerspective << std::endl;
+        //std::cout << "Switch to perspective #" << currentPerspective << std::endl;
 
         std::vector<float> temp = perspectiveList[currentPerspective];
 
@@ -276,8 +271,8 @@ namespace IO
             translation[2] = temp[5];
         }
 
-        std::cout << camera[0] << ", " << camera[1] << ", " << camera[2] << std::endl;
-        glutPostRedisplay();
+        std::cout << "#" << currentPerspective << " [" << camera[0] << " " << camera[1] << " " << camera[2] << "]" << std::endl;
+        //glutPostRedisplay();
     }
 
 
@@ -287,11 +282,8 @@ namespace IO
         switch(key)
         {
             case 27: glutLeaveMainLoop();break;
-            case 'z': r -= 0.1f; break;
-            case 'x': r += 0.1f; break; 
-            case 'm': glEnable(GL_MULTISAMPLE); break;
-            case 'n': glDisable(GL_MULTISAMPLE); break;
-            case ' ': nextLocation(); break;
+            case ' ': start = false;break;//nextLocation(); break;
+            case 'n': nextLocation(1);break;
         }
         // camera[0] = r * sin(alpha * 3.14f / 180.0f) * cos(beta * 3.14f / 180.0f);
         // camera[1] = r * cos(alpha * 3.14f / 180.0f) * cos(beta * 3.14f / 180.0f);
@@ -304,32 +296,8 @@ namespace IO
 
     void processMouseButtons(int button, int state, int xx, int yy) 
     {
-        // start tracking the mouse
-        if (state == GLUT_DOWN)  
-        {
-            startX = xx;
-            startY = yy;
-            if (button == GLUT_LEFT_BUTTON)
-                tracking = 1;
-            else if (button == GLUT_RIGHT_BUTTON)
-                tracking = 2;
-        }
-
-        //stop tracking the mouse
-        else if (state == GLUT_UP)
-         {
-            if (tracking == 1) 
-            {
-                alpha += (startX - xx);
-                beta += (yy - startY);
-            }
-            else if (tracking == 2)
-            {
-                r += (yy - startY) * 0.01f;
-            }
-            tracking = 0;
-        }
-
+        //glutTimerFunc(50, nextLocation, 1);
+        start = true;
     }
 
     // Track mouse motion while buttons are pressed

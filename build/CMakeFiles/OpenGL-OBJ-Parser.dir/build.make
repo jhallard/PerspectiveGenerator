@@ -203,6 +203,8 @@ OpenGL-OBJ-Parser: CMakeFiles/OpenGL-OBJ-Parser.dir/src/Helper/MathHelp.cpp.o
 OpenGL-OBJ-Parser: CMakeFiles/OpenGL-OBJ-Parser.dir/src/Rendering/Render.cpp.o
 OpenGL-OBJ-Parser: CMakeFiles/OpenGL-OBJ-Parser.dir/src/IO/ProgramIO.cpp.o
 OpenGL-OBJ-Parser: /usr/local/lib/libassimp.so
+OpenGL-OBJ-Parser: /opt/ros/hydro/lib/libcv_bridge.so
+OpenGL-OBJ-Parser: /usr/lib/libopencv_core.so.2.3.1
 OpenGL-OBJ-Parser: CMakeFiles/OpenGL-OBJ-Parser.dir/build.make
 OpenGL-OBJ-Parser: CMakeFiles/OpenGL-OBJ-Parser.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --red --bold "Linking CXX executable OpenGL-OBJ-Parser"

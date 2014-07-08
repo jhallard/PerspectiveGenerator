@@ -29,7 +29,7 @@ namespace IO
 
     void changeSize(int w, int h);
 
-    bool nextLocation();
+    void nextLocation(int);
 
     void processKeys(unsigned char key, int xx, int yy);
 

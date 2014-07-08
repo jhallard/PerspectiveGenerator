@@ -32,9 +32,9 @@ namespace View
 
         up[0] = 0.0f;   up[1] = 0.0f;   up[2] = 1.0f;
 
-        dir[0] =  (lookAtX - posX);
-        dir[1] =  (lookAtY - posY);
-        dir[2] =  (lookAtZ - posZ);
+        dir[0] =  lookAtX;
+        dir[1] =  lookAtY;
+        dir[2] =  lookAtZ;
         MathHelp::normalize(dir);
 
         MathHelp::crossProduct(dir,up,right);

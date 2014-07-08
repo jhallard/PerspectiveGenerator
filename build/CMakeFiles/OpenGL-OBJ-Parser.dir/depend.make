@@ -7,6 +7,7 @@ CMakeFiles/OpenGL-OBJ-Parser.dir/src/Helper/MathHelp.cpp.o: ../src/Helper/MathHe
 
 CMakeFiles/OpenGL-OBJ-Parser.dir/src/IO/ProgramIO.cpp.o: ../src/IO/../Helper/HelperStructures.h
 CMakeFiles/OpenGL-OBJ-Parser.dir/src/IO/ProgramIO.cpp.o: ../src/IO/../Helper/MathHelp.h
+CMakeFiles/OpenGL-OBJ-Parser.dir/src/IO/ProgramIO.cpp.o: ../src/IO/../Rendering/../IO/ProgramIO.h
 CMakeFiles/OpenGL-OBJ-Parser.dir/src/IO/ProgramIO.cpp.o: ../src/IO/../Rendering/Render.h
 CMakeFiles/OpenGL-OBJ-Parser.dir/src/IO/ProgramIO.cpp.o: ../src/IO/../View/View.h
 CMakeFiles/OpenGL-OBJ-Parser.dir/src/IO/ProgramIO.cpp.o: ../src/IO/ProgramIO.cpp
@@ -22,6 +23,8 @@ CMakeFiles/OpenGL-OBJ-Parser.dir/src/Main/main.cpp.o: ../src/Main/main.cpp
 
 CMakeFiles/OpenGL-OBJ-Parser.dir/src/Rendering/Render.cpp.o: ../src/Rendering/../Helper/HelperStructures.h
 CMakeFiles/OpenGL-OBJ-Parser.dir/src/Rendering/Render.cpp.o: ../src/Rendering/../Helper/MathHelp.h
+CMakeFiles/OpenGL-OBJ-Parser.dir/src/Rendering/Render.cpp.o: ../src/Rendering/../IO/../Rendering/Render.h
+CMakeFiles/OpenGL-OBJ-Parser.dir/src/Rendering/Render.cpp.o: ../src/Rendering/../IO/ProgramIO.h
 CMakeFiles/OpenGL-OBJ-Parser.dir/src/Rendering/Render.cpp.o: ../src/Rendering/../View/View.h
 CMakeFiles/OpenGL-OBJ-Parser.dir/src/Rendering/Render.cpp.o: ../src/Rendering/Render.cpp
 CMakeFiles/OpenGL-OBJ-Parser.dir/src/Rendering/Render.cpp.o: ../src/Rendering/Render.h

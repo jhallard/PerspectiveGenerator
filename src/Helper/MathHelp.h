@@ -13,7 +13,12 @@
 #include "assimp/postprocess.h"
 #include "assimp/scene.h"
 
+#include <opencv2/core/core.hpp>
+#include <opencv2/imgproc/imgproc.hpp>
+#include <opencv2/highgui/highgui.hpp>
+
 #include <string>
+#include <sstream>
 #include <exception>
 #include <fstream>
 #include <map>
@@ -53,7 +58,7 @@ extern const aiScene* scene;
 // scale factor for the model to fit in the window
 extern float scaleFactor;
 
-extern std::string modelname;// = "../OBJ_Data/bench.obj";//../OBJ_Data/14db49e526f340dfba81c4a2da23c716/14db49e526f340dfba81c4a2da23c716.obj";
+extern std::string modelname;
 extern std::string path;
 // Shader Names
 extern char *vertexfile;// = "../src/Shaders/VertexShader.vert";//../src/Shaders/VertexShader.vert";
@@ -85,6 +90,8 @@ extern char s[32];
 extern std::vector<std::vector<float> > perspectiveList;
 extern int currentPerspective;
 extern int perspectiveCount;
+extern bool start;
+extern int imageNum;
 
 extern int width;
 extern int height;
