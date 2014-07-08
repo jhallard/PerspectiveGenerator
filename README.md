@@ -1,4 +1,17 @@
-OpenGL-OBJ-Parser
-=================
+PerspectiveGenerator
+====================
 
-This program is a refinement and continuation of the original test program, OpenGL_OBJ_Viewer. This program is written much, much better and makes much more logical sense in it's layout. the last program was meant to be a test, a proof of concept, but this one is meant to be a final version. This program will read in a .obj file and it's correpsonding texture and material files, then it will either display this model to the viewer, or the user can have the program go through the 3D model and take images from as many different perspectives as they choose. The eventual purpose of the program is to generate a database of images from all different perspectives in our 3D environment, which will allow us to precompute features using some Computer Vision algorithms for quick comparison with a real time feed from a robot, which will help us to localize a robot in it's environment.
+This program was developed in aid of the goal of implementing Monte Carlo Localization for robots inside of a 3D space using image data. To complete this goal, one of the things we needed to do was render images from thousands of different perspectives within a 3D model that was made with a 3D imaging camera (from Matterport Inc.). These images would be run through various feature detection algorithms and the results catalogued for use by future programs. 
+
+This program works as follows.
+1.) Takes in an input file specifying a few parameters
+    a.) Path to directory containing 3D model and texture files
+    b.) Name of .obj file containing 3D model
+    c.) A List of [x, y, z, viewx, viewy, viewz] coordinates from which images should be rendered
+        * viewx/y/z are component of the vector that the camera is looking along from the [x,y,z] coordinates.
+2.) This program goes along the list and renders an image from each perspective listed.
+    a.) Each image is grouped in a simple data structure that contains the image and the [x,y,z,viewx,viewy,viewz] coordinates of the perspective.
+3.) These data structures are saved to a local directory for future processing.
+
+
+Example .obj and .mtl files have been included with the project. Input.txt and Input2.txt are two sample input files that should compile right from download.
