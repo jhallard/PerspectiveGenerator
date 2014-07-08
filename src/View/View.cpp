@@ -25,8 +25,8 @@ namespace View
 
 	}
 
-	void setCamera(float posX, float posY, float posZ, 
-				   float lookAtX, float lookAtY, float lookAtZ) {
+	void setCamera(float posX, float posY, float posZ, float lookAtX, float lookAtY, float lookAtZ)
+	{
 
 		float dir[3], right[3], up[3];
 

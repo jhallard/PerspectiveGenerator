@@ -199,18 +199,19 @@ namespace Render
 
 	void renderScene(void)
 	{
-
+		//std::cout << "render" << std::endl;
 		static float step = 0.0f;
 
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		//translate(translation[0], translation[1], translation[2]);
+		//glTranslated(translation[0], translation[1], translation[2]);
 
 		//transx = 0; transy = 0; transz = 0;
 		// set camera matrix
 		//View::setCamera(camera[0], camera[1], camera[2],translation[0], translation[1], translation[2]);
 
-		View::setCamera(camera[0], camera[1], camera[2], 0, 0, 0);
+		View::setCamera(camera[0]+step, camera[1], camera[2]-step, step, 0, -step);
+		step += .02;
 		// set the model matrix to the identity Matrix
 		MathHelp::setIdentityMatrix(modelMatrix,4);
 
@@ -218,7 +219,7 @@ namespace Render
 		scale(scaleFactor, scaleFactor, scaleFactor);
 
 		// keep rotating the model
-		rotate(step, 0.0f, 1.0f, 0.0f);
+		//rotate(step, 0.0f, 1.0f, 0.0f);
 		
 		// use our shader
 		glUseProgram(program);

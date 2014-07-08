@@ -25,8 +25,16 @@
 
 int init();
 
+void timer(int)
+{
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+	glTranslated(.2, .2, .5);//translation[0], translation[1], translation[2]);
+	std::cout << "timer function \n" << std::endl;
+}
 
-int main(int argc, char **argv) {
+int main(int argc, char **argv) 
+{
 
 //  GLUT initialization
 	glutInit(&argc, argv);
@@ -52,6 +60,11 @@ int main(int argc, char **argv) {
 	glutMotionFunc(IO::processMouseMotion);
 	glutMouseWheelFunc ( IO::mouseWheel ) ;
 
+
+	if(argc == 2)
+		IO::parseInputFile(argv[1]);
+	else
+		std::cout << "Wrong number of command line arguments\n" << std::endl;
 //	Init GLEW
 	//glewExperimental = GL_TRUE;
 	glewInit();
@@ -62,29 +75,22 @@ int main(int argc, char **argv) {
 		return(1);
 	}
 
-	if(argc == 2)
-		IO::parseInputFile(argv[1]);
-	else
-	{
-		std::cout << "Wrong number of command line arguments\n" << std::endl;
-	}
-
 	//  Init the app (load model and textures) and OpenGL
 	if (!init())
 	{
 		printf("Could not Load the Model\n");
 		return 0;
 	}
-   printf ("Vendor: %s\n", glGetString (GL_VENDOR));
-   printf ("Renderer: %s\n", glGetString (GL_RENDERER));
-   printf ("Version: %s\n", glGetString (GL_VERSION));
-   printf ("GLSL: %s\n", glGetString (GL_SHADING_LANGUAGE_VERSION));
+   // printf ("Vendor: %s\n", glGetString (GL_VENDOR));
+   // printf ("Renderer: %s\n", glGetString (GL_RENDERER));
+   // printf ("Version: %s\n", glGetString (GL_VERSION));
+   // printf ("GLSL: %s\n", glGetString (GL_SHADING_LANGUAGE_VERSION));
 
 
     // return from main loop
     glutSetOption(GLUT_ACTION_ON_WINDOW_CLOSE, GLUT_ACTION_GLUTMAINLOOP_RETURNS);
 
-
+    //glutTimerFunc(1600, timer, 1);
 	glutMainLoop();
 
 	// cleaning up
@@ -122,7 +128,7 @@ int init()
 	Render::genVAOsAndUniformBuffer();
 
 	glEnable(GL_DEPTH_TEST);		
-	glClearColor(1.0f, 1.0f, 1.0f, 0.0f);
+	glClearColor(1.0f, 0.0f, 1.0f, 0.0f);
 
 
 	//

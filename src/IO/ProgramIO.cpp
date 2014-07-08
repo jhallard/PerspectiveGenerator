@@ -77,17 +77,22 @@ namespace IO
 	    	}
 	    }
 
+	    std::cout << " Perspective Values : {";
 	    for(int i = 0; i < 6; i++)
-	    	std::cout << " Values " << i << " : " << values[i] << ",";
+	    	std::cout << values[i] << ", ";
+	    std::cout << "}" << std::endl;
+
+	    std::cout << " Rotation Values : {";
 	    for(int i = 0; i < 3; i++)
-	    	std::cout << " Rotation " << i << " : " << rotation[i] << ",";
+	    	std::cout << rotation[i] << ", ";
+	    std::cout << "}" << std::endl;
 
 	    camera[0] = values[0];
 	    camera[1] = values[1];
 	    camera[2] = values[2];
-	    translation[3] = values[3];
-	    translation[4] = values[4];
-	    translation[5] = values[5];
+	    translation[0] = values[3];
+	    translation[1] = values[4];
+	    translation[2] = values[5];
 
 	}
 	bool Import3DFromFile(const std::string& pFile)//, const aiScene* scene)

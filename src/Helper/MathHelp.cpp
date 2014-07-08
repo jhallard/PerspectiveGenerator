@@ -26,8 +26,8 @@ float scaleFactor = 1;
 //const std::string modelname = "../OBJ_Data/bench.obj";//../OBJ_Data/14db49e526f340dfba81c4a2da23c716/14db49e526f340dfba81c4a2da23c716.obj";
 //const std::string path = "../OBJ_Data/";
 
-std::string modelname = "../OBJ_Data/14db49e526f340dfba81c4a2da23c716/14db49e526f340dfba81c4a2da23c716.obj";
-std::string path = "../OBJ_Data/14db49e526f340dfba81c4a2da23c716/";
+std::string modelname;// = "../OBJ_Data/14db49e526f340dfba81c4a2da23c716/14db49e526f340dfba81c4a2da23c716.obj";
+std::string path;// = "../OBJ_Data/14db49e526f340dfba81c4a2da23c716/";
 
 // Shader Names
 char *vertexfile = "../src/Shaders/Shader.vert";
@@ -42,7 +42,7 @@ std::vector<float *> matrixStack;
 float camera[3] = {0, 0, 0};
 
 // mesh tranlation
-float translation[3] = {3, 2, 1};
+float translation[3] = {0,  0,  0};
 
 // Model Matrix (part of the OpenGL Model View Matrix)
 float modelMatrix[16];

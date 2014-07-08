@@ -1,0 +1,4 @@
+../OBJ_Data/14db49e526f340dfba81c4a2da23c716/
+../OBJ_Data/14db49e526f340dfba81c4a2da23c716/14db49e526f340dfba81c4a2da23c716.obj
+0 0 5
+.2 1.25 .6 0 0 0
