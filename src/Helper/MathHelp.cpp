@@ -23,11 +23,8 @@ const aiScene* scene = NULL;
 // scale factor for the model to fit in the window
 float scaleFactor = 1;
 
-//const std::string modelname = "../OBJ_Data/bench.obj";//../OBJ_Data/14db49e526f340dfba81c4a2da23c716/14db49e526f340dfba81c4a2da23c716.obj";
-//const std::string path = "../OBJ_Data/";
-
-std::string modelname;// = "../OBJ_Data/14db49e526f340dfba81c4a2da23c716/14db49e526f340dfba81c4a2da23c716.obj";
-std::string path;// = "../OBJ_Data/14db49e526f340dfba81c4a2da23c716/";
+std::string modelname;
+std::string path;
 
 // Shader Names
 char *vertexfile = "../src/Shaders/Shader.vert";

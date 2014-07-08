@@ -17,13 +17,11 @@ namespace Shaders
         if (fn != NULL)
         {
             fp = fopen(fn,"rt");
-
             if (fp != NULL) 
             {
                 fseek(fp, 0, SEEK_END);
                 count = ftell(fp);
                 rewind(fp);
-
                 if (count > 0)
                 {
                     content = (char *)malloc(sizeof(char) * (count+1));
@@ -33,14 +31,10 @@ namespace Shaders
                 fclose(fp);
             }
             else
-            {
                 std::cout << "fp NULL inside textFileRead" << std::endl;
-            }
         }
         else
-        {
             std::cout << "fn = null \n" << std::endl;
-        }
         return content;
     }
 
@@ -51,8 +45,6 @@ namespace Shaders
     {
 
         char *vs = NULL,*fs = NULL,*fs2 = NULL;
-
-        //GLuint p,v,f;
 
         vertexShader = glCreateShader(GL_VERTEX_SHADER);
         fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
