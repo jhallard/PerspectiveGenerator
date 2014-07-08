@@ -82,6 +82,10 @@ extern long frame;
 
 extern char s[32];
 
+extern std::vector<std::vector<float> > perspectiveList;
+extern int currentPerspective;
+extern int perspectiveCount;
+
 
 namespace MathHelp
 {

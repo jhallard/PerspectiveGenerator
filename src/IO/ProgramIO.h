@@ -29,6 +29,8 @@ namespace IO
 
     void changeSize(int w, int h);
 
+    bool nextLocation();
+
     void processKeys(unsigned char key, int xx, int yy);
 
     void processMouseButtons(int button, int state, int xx, int yy);

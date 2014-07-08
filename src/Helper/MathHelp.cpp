@@ -51,6 +51,10 @@ long frame = 0;
 
 char s[32];
 
+std::vector<std::vector<float> > perspectiveList;
+int currentPerspective = 0;
+int perspectiveCount = 0;
+
 
 std::map<std::string, GLuint> textureIdMap;
 

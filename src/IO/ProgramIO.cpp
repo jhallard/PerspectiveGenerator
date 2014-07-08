@@ -59,10 +59,10 @@ namespace IO
         {
             int j = 0;
             double value;                         // the value of the item at the below index
-            int count;                            // the current index in the below array
+            int count = 0;                            // the current index in the below array
 
             getline(file, str);
-            for(int i = 0; i < str.size(); i++)
+            for(int i = 0; i < str.size() && count < 6; i++)
             {
                 std::string temp;
                 if(str[i] == ' ' || str[i] == ',')
@@ -75,11 +75,18 @@ namespace IO
                     temp = ' ';
                 }
             }
+            std::vector<float> temp;
+            for(int i = 0; i < 6; i++)
+                temp.push_back(values[i]);
+
+            perspectiveList.push_back(temp);
+            perspectiveCount++;
         }
 
+        std::cout << perspectiveCount << std::endl;
         std::cout << " Perspective Values : {";
         for(int i = 0; i < 6; i++)
-            std::cout << values[i] << ", ";
+            std::cout << perspectiveList[0][i] << ", ";
         std::cout << "}" << std::endl;
 
         std::cout << " Rotation Values : {";
@@ -87,9 +94,9 @@ namespace IO
             std::cout << rotation[i] << ", ";
         std::cout << "}" << std::endl;
 
-        camera[0] = values[0];
-        camera[1] = values[1];
-        camera[2] = values[2];
+        camera[0] = perspectiveList[0][0];
+        camera[1] = perspectiveList[0][1];
+        camera[2] = perspectiveList[0][2];
         translation[0] = values[3];
         translation[1] = values[4];
         translation[2] = values[5];
@@ -266,6 +273,30 @@ namespace IO
         return retCode;
     }
 
+    bool nextLocation()
+    {
+         currentPerspective++;
+        if(currentPerspective >= perspectiveCount)
+            currentPerspective = 0;
+
+        std::cout << "Switch to perspective #" << currentPerspective << std::endl;
+
+        std::vector<float> temp = perspectiveList[currentPerspective];
+
+        if(true)//temp.size() == 6)
+        {
+            camera[0] = temp[0];
+            camera[1] = temp[1];
+            camera[2] = temp[2];
+            translation[0] = temp[3];
+            translation[1] = temp[4];
+            translation[2] = temp[5];
+        }
+
+        std::cout << camera[0] << ", " << camera[1] << ", " << camera[2] << std::endl;
+        glutPostRedisplay();
+    }
+
     void processKeys(unsigned char key, int xx, int yy) 
     {
         double f = .05;
@@ -276,16 +307,11 @@ namespace IO
             case 'x': r += 0.1f; break; 
             case 'm': glEnable(GL_MULTISAMPLE); break;
             case 'n': glDisable(GL_MULTISAMPLE); break;
-            case 'w': translation[1] += f; break;
-            case 's': translation[1] += -f; break;
-            case 'a': translation[0] += -f; break;
-            case 'q': translation[0] += f; break;
-            case 'e': translation[2] += -f; break;
-            case 'd': translation[2] += f; break;
+            case ' ': nextLocation(); break;
         }
-        camera[0] = r * sin(alpha * 3.14f / 180.0f) * cos(beta * 3.14f / 180.0f);
-        camera[1] = r * cos(alpha * 3.14f / 180.0f) * cos(beta * 3.14f / 180.0f);
-        camera[2] = r *                               sin(beta * 3.14f / 180.0f);
+        // camera[0] = r * sin(alpha * 3.14f / 180.0f) * cos(beta * 3.14f / 180.0f);
+        // camera[1] = r * cos(alpha * 3.14f / 180.0f) * cos(beta * 3.14f / 180.0f);
+        // camera[2] = r *                               sin(beta * 3.14f / 180.0f);
 
     //  uncomment this if not using an idle func
         glutPostRedisplay();
@@ -324,59 +350,59 @@ namespace IO
 
     // Track mouse motion while buttons are pressed
 
-void processMouseMotion(int xx, int yy)
-{
-
-    int deltaX, deltaY;
-    float alphaAux, betaAux;
-    float rAux;
-
-    deltaX =  startX - xx;
-    deltaY =  yy - startY;
-    // left mouse button: move camera
-    if (tracking == 1) 
+    void processMouseMotion(int xx, int yy)
     {
-        alphaAux = alpha + deltaX;
-        betaAux = beta + deltaY;
 
-        if (betaAux > 85.0f)
-            betaAux = 85.0f;
-        else if (betaAux < -85.0f)
-            betaAux = -85.0f;
+        int deltaX, deltaY;
+        float alphaAux, betaAux;
+        float rAux;
 
-        rAux = r;
+        deltaX =  startX - xx;
+        deltaY =  yy - startY;
+        // left mouse button: move camera
+        if (tracking == 1) 
+        {
+            // alphaAux = alpha + deltaX;
+            // betaAux = beta + deltaY;
 
-        camera[0] = rAux * cos(betaAux * 3.14f / 180.0f) * sin(alphaAux * 3.14f / 180.0f);
-        camera[1] = rAux * cos(betaAux * 3.14f / 180.0f) * cos(alphaAux * 3.14f / 180.0f);
-        camera[2] = rAux * sin(betaAux * 3.14f / 180.0f);
+            // if (betaAux > 85.0f)
+            //     betaAux = 85.0f;
+            // else if (betaAux < -85.0f)
+            //     betaAux = -85.0f;
+
+            // rAux = r;
+
+            // camera[0] = rAux * cos(betaAux * 3.14f / 180.0f) * sin(alphaAux * 3.14f / 180.0f);
+            // camera[1] = rAux * cos(betaAux * 3.14f / 180.0f) * cos(alphaAux * 3.14f / 180.0f);
+            // camera[2] = rAux * sin(betaAux * 3.14f / 180.0f);
+        }
+        else if (tracking == 2)
+         {
+            // alphaAux = alpha;
+            // betaAux = beta;
+            // rAux = r + (deltaY * 0.01f);
+
+            // camera[0] = rAux * cos(betaAux * 3.14f / 180.0f) * sin(alphaAux * 3.14f / 180.0f);
+            // camera[1] = rAux * cos(betaAux * 3.14f / 180.0f) * cos(alphaAux * 3.14f / 180.0f);
+            // camera[2] = rAux * sin(betaAux * 3.14f / 180.0f);
+        }
+
+
+    //  uncomment this if not using an idle func
+        glutPostRedisplay();
     }
-    else if (tracking == 2)
-     {
-        alphaAux = alpha;
-        betaAux = beta;
-        rAux = r + (deltaY * 0.01f);
 
-        camera[0] = rAux * cos(betaAux * 3.14f / 180.0f) * sin(alphaAux * 3.14f / 180.0f);
-        camera[1] = rAux * cos(betaAux * 3.14f / 180.0f) * cos(alphaAux * 3.14f / 180.0f);
-        camera[2] = rAux * sin(betaAux * 3.14f / 180.0f);
+
+
+
+    void mouseWheel(int wheel, int direction, int x, int y) 
+    {
+
+        r += direction * 0.1f;
+        camera[0] = r * sin(alpha * 3.14f / 180.0f) * cos(beta * 3.14f / 180.0f);
+        camera[1] = r * cos(alpha * 3.14f / 180.0f) * cos(beta * 3.14f / 180.0f);
+        camera[2] =  r *                             sin(beta * 3.14f / 180.0f);
     }
-
-
-//  uncomment this if not using an idle func
-    glutPostRedisplay();
-}
-
-
-
-
-void mouseWheel(int wheel, int direction, int x, int y) 
-{
-
-    r += direction * 0.1f;
-    camera[0] = r * sin(alpha * 3.14f / 180.0f) * cos(beta * 3.14f / 180.0f);
-    camera[1] = r * cos(alpha * 3.14f / 180.0f) * cos(beta * 3.14f / 180.0f);
-    camera[2] =  r *                             sin(beta * 3.14f / 180.0f);
-}
 
 
 

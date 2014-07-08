@@ -6,7 +6,7 @@
 
 #IncludeRegexTransform: 
 
-/home/robotics/HMCREU/OpenGL/OpenGL-OBJ-Parser/src/Rendering/../Helper/HelperStructures.h
+/home/robotics/HMCREU/OpenGL/PerspectiveGenerator/src/View/../Helper/../Helper/HelperStructures.h
 IL/il.h
 -
 GL/glew.h
@@ -14,9 +14,9 @@ GL/glew.h
 GL/freeglut.h
 -
 
-/home/robotics/HMCREU/OpenGL/OpenGL-OBJ-Parser/src/Rendering/../Helper/MathHelp.h
+/home/robotics/HMCREU/OpenGL/PerspectiveGenerator/src/View/../Helper/MathHelp.h
 ../Helper/HelperStructures.h
-/home/robotics/HMCREU/OpenGL/OpenGL-OBJ-Parser/src/Rendering/../Helper/../Helper/HelperStructures.h
+/home/robotics/HMCREU/OpenGL/PerspectiveGenerator/src/View/../Helper/../Helper/HelperStructures.h
 IL/il.h
 -
 GL/glew.h
@@ -26,11 +26,11 @@ GL/glut.h
 GL/freeglut.h
 -
 assimp/Importer.hpp
-/home/robotics/HMCREU/OpenGL/OpenGL-OBJ-Parser/src/Rendering/../Helper/assimp/Importer.hpp
+/home/robotics/HMCREU/OpenGL/PerspectiveGenerator/src/View/../Helper/assimp/Importer.hpp
 assimp/postprocess.h
-/home/robotics/HMCREU/OpenGL/OpenGL-OBJ-Parser/src/Rendering/../Helper/assimp/postprocess.h
+/home/robotics/HMCREU/OpenGL/PerspectiveGenerator/src/View/../Helper/assimp/postprocess.h
 assimp/scene.h
-/home/robotics/HMCREU/OpenGL/OpenGL-OBJ-Parser/src/Rendering/../Helper/assimp/scene.h
+/home/robotics/HMCREU/OpenGL/PerspectiveGenerator/src/View/../Helper/assimp/scene.h
 string
 -
 exception
@@ -46,19 +46,11 @@ iostream
 vector
 -
 
-/home/robotics/HMCREU/OpenGL/OpenGL-OBJ-Parser/src/Rendering/../View/View.h
-../Helper/MathHelp.h
-/home/robotics/HMCREU/OpenGL/OpenGL-OBJ-Parser/src/Rendering/../View/../Helper/MathHelp.h
+/home/robotics/HMCREU/OpenGL/PerspectiveGenerator/src/View/View.cpp
+View.h
+/home/robotics/HMCREU/OpenGL/PerspectiveGenerator/src/View/View.h
 
-/home/robotics/HMCREU/OpenGL/OpenGL-OBJ-Parser/src/Rendering/Render.cpp
-Render.h
-/home/robotics/HMCREU/OpenGL/OpenGL-OBJ-Parser/src/Rendering/Render.h
-
-/home/robotics/HMCREU/OpenGL/OpenGL-OBJ-Parser/src/Rendering/Render.h
+/home/robotics/HMCREU/OpenGL/PerspectiveGenerator/src/View/View.h
 ../Helper/MathHelp.h
-/home/robotics/HMCREU/OpenGL/OpenGL-OBJ-Parser/src/Rendering/../Helper/MathHelp.h
-../Helper/HelperStructures.h
-/home/robotics/HMCREU/OpenGL/OpenGL-OBJ-Parser/src/Rendering/../Helper/HelperStructures.h
-../View/View.h
-/home/robotics/HMCREU/OpenGL/OpenGL-OBJ-Parser/src/Rendering/../View/View.h
+/home/robotics/HMCREU/OpenGL/PerspectiveGenerator/src/View/../Helper/MathHelp.h
 

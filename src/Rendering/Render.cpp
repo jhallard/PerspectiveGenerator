@@ -204,13 +204,9 @@ namespace Render
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        //glTranslated(translation[0], translation[1], translation[2]);
 
-        //transx = 0; transy = 0; transz = 0;
-        // set camera matrix
-        //View::setCamera(camera[0], camera[1], camera[2],translation[0], translation[1], translation[2]);
-        translate(-(translation[0]+step), -translation[1], -(translation[2]+step));
-        View::setCamera(camera[0]+step, camera[1], camera[2]+step, -(translation[0]+step), translation[1], -(translation[2]+step));
+        View::setCamera(camera[0], camera[1], camera[2],translation[0], translation[1], translation[2]);
+
         step += .02;
         // set the model matrix to the identity Matrix
         MathHelp::setIdentityMatrix(modelMatrix,4);

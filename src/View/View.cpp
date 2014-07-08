@@ -30,7 +30,7 @@ namespace View
 
         float dir[3], right[3], up[3];
 
-        up[0] = 0.0f;   up[1] = 1.0f;   up[2] = 0.0f;
+        up[0] = 0.0f;   up[1] = 0.0f;   up[2] = 1.0f;
 
         dir[0] =  (lookAtX - posX);
         dir[1] =  (lookAtY - posY);
@@ -40,8 +40,8 @@ namespace View
         MathHelp::crossProduct(dir,up,right);
         MathHelp::normalize(right);
 
-        MathHelp::crossProduct(right,dir,up);
-        MathHelp::normalize(up);
+        //MathHelp::crossProduct(right,dir,up);
+        //MathHelp::normalize(up);
 
         float viewMatrix[16],aux[16];
 
