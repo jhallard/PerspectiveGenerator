@@ -30,7 +30,13 @@ namespace IO
 
         // get the name of the obj file
         getline( file, str);
-        modelname = str.c_str();
+        modelname = path+str;
+
+        getline( file, str);
+        generatedImagesDirectory = str;
+
+        getline(file, str);
+        fileExt = str;
 
         // get the camxyz and lookat values.
         while(!file.eof())

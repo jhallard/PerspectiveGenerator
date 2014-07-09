@@ -56,6 +56,8 @@ int currentPerspective = 0;
 int perspectiveCount = 0;
 bool start = false;
 int imageNum = 0;
+std::string generatedImagesDirectory = "../GeneratedImages/";
+std::string fileExt = ".jpg";
 
 int width = 600;
 int height = 600;

@@ -259,7 +259,8 @@ namespace Render
                 }
             }
             std::stringstream ss;
-            ss << "../GeneratedImages/picture" << imageNum << ".png";
+            ss << generatedImagesDirectory << "_" << camera[0] << "_" << camera[1] << "_" << camera[2] << "_" << 
+            translation[0] << "_" <<  translation[1] << "_" <<  translation[2] << "_" << fileExt;
             std::string z = ss.str();
             cv::imwrite(z, image);
             imageNum++;

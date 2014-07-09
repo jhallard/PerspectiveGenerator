@@ -92,6 +92,8 @@ extern int currentPerspective;
 extern int perspectiveCount;
 extern bool start;
 extern int imageNum;
+extern std::string generatedImagesDirectory;
+extern std::string fileExt;
 
 extern int width;
 extern int height;
