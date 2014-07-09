@@ -57,8 +57,8 @@ int perspectiveCount = 0;
 bool start = false;
 int imageNum = 0;
 
-int width = 1000;
-int height = 800;
+int width = 600;
+int height = 600;
 
 
 std::map<std::string, GLuint> textureIdMap;
